@@ -10,7 +10,7 @@ const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./utils/errorHandler');
 
 
-const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'STRIPE_SECRET_KEY', 'CLIENT_URL'];
+const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'STRIPE_SECRET_KEY'];
 requiredEnvVars.forEach(key => {
   if (!process.env[key]) {
     console.error(` CRITICAL: Missing environment variable: ${key}`);
@@ -60,7 +60,11 @@ const authLimiter = rateLimit({
 
 
 
-const allowedOrigins = process.env.CLIENT_URL ? process.env.CLIENT_URL.split(',') : ['http://localhost:3000'];
+const allowedOrigins = ['http://localhost:3000', 'https://location-voiture.vercel.app'];
+if (process.env.CLIENT_URL) {
+  allowedOrigins.push(...process.env.CLIENT_URL.split(','));
+}
+
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
