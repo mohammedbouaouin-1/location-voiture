@@ -10,7 +10,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Determine if we're on a page with a dark hero (Home)
+  
   const isHeroPage = location.pathname === '/';
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function Navbar() {
     { path: "/WhyChooseUs", label: "Pourquoi nous choisir" },
   ];
 
-  // Dynamic styles based on scroll position & hero page
+  
   const isTransparent = isHeroPage && !scrolled && !menuOpen;
 
   return (
@@ -44,7 +44,7 @@ export default function Navbar() {
         : 'bg-white/95 backdrop-blur-md shadow-lg shadow-black/[0.03] py-3'
     }`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        {/* Logo */}
+        {}
         <Link to="/" className="flex items-center gap-2 text-2xl font-extrabold group">
           <div className={`p-2 rounded-xl group-hover:scale-110 transition-all duration-300 shadow-lg ${
             isTransparent 
@@ -58,7 +58,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map(link => (
             <Link 
@@ -130,7 +130,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {}
         <button 
           onClick={() => setMenuOpen(!menuOpen)}
           className={`md:hidden p-2 rounded-lg transition-colors ${
@@ -144,7 +144,7 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {}
       {menuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t animate-slide-down">
           <div className="p-6 space-y-4">

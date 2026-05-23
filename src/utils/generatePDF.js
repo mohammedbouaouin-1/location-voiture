@@ -4,11 +4,11 @@ import autoTable from 'jspdf-autotable';
 export const generateInvoicePDF = (booking, isUser = false) => {
   const doc = new jsPDF();
   
-  // Couleurs LocaFès Premium (Onyx & Champagne)
-  const champagneColor = [196, 164, 124]; // #C4A47C
-  const onyxColor = [17, 24, 39]; // #111827
+  
+  const champagneColor = [196, 164, 124]; 
+  const onyxColor = [17, 24, 39]; 
 
-  // Récupération sécurisée des données (gère le Dashboard ET la page Success URL Params)
+  
   const urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
   
   const clientName = booking.fullName || booking.user?.name || urlParams.get('fullName') || 'Client Premium';
@@ -23,7 +23,7 @@ export const generateInvoicePDF = (booking, isUser = false) => {
   const startDate = rawStartDate ? new Date(rawStartDate).toLocaleDateString('fr-FR') : '-';
   const endDate = rawEndDate ? new Date(rawEndDate).toLocaleDateString('fr-FR') : '-';
 
-  // Fallback de secours : si le prix journalier n'est pas fourni (ex: voiture supprimée), on le calcule
+  
   let calculatedCarPrice = booking.car?.price && booking.car.price > 0 ? booking.car.price : undefined;
   if (!calculatedCarPrice && totalPrice !== '-' && rawStartDate && rawEndDate) {
     const s = new Date(rawStartDate);
@@ -38,14 +38,14 @@ export const generateInvoicePDF = (booking, isUser = false) => {
     ? `LF-${booking._id.substring(0, 8).toUpperCase()}` 
     : `LF-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
 
-  // 1. En-tête (Logo et infos entreprise)
+  
   doc.setFontSize(28);
   doc.setTextColor(onyxColor[0], onyxColor[1], onyxColor[2]);
   doc.setFont("helvetica", "bold");
   doc.text("LOCA", 20, 30);
   
   doc.setTextColor(champagneColor[0], champagneColor[1], champagneColor[2]);
-  doc.text("FÈS", 55, 30); // Décalé pour suivre LOCA
+  doc.text("FÈS", 55, 30); 
   
   doc.setFontSize(10);
   doc.setTextColor(100);
@@ -55,8 +55,8 @@ export const generateInvoicePDF = (booking, isUser = false) => {
   doc.text("Fès, Maroc 30000", 20, 50);
   doc.text("Contact : contact@locafes.ma | +212 5XX XX XX XX", 20, 56);
   
-  // 2. Bloc Facture (Reçu)
-  doc.setFillColor(248, 245, 240); // Fond très clair champagne (#F8F5F0)
+  
+  doc.setFillColor(248, 245, 240); 
   doc.roundedRect(120, 20, 70, 40, 3, 3, 'F');
   
   doc.setFontSize(14);
@@ -70,12 +70,12 @@ export const generateInvoicePDF = (booking, isUser = false) => {
   doc.text(`N° : ${receiptNum}`, 130, 42);
   doc.text(`Date : ${new Date().toLocaleDateString('fr-FR')}`, 130, 50);
   
-  // 3. Ligne de séparation élégante
+  
   doc.setDrawColor(champagneColor[0], champagneColor[1], champagneColor[2]);
   doc.setLineWidth(0.5);
   doc.line(20, 70, 190, 70);
 
-  // 4. Informations Client
+  
   doc.setFontSize(11);
   doc.setTextColor(champagneColor[0], champagneColor[1], champagneColor[2]);
   doc.setFont("helvetica", "bold");
@@ -91,7 +91,7 @@ export const generateInvoicePDF = (booking, isUser = false) => {
   }
   doc.text(`Tél : ${clientPhone}`, 20, isUser ? 107 : 100);
 
-  // 5. Tableau des détails
+  
   autoTable(doc, {
     startY: 120,
     headStyles: { 
@@ -122,7 +122,7 @@ export const generateInvoicePDF = (booking, isUser = false) => {
 
   const finalY = (doc).lastAutoTable.finalY + 30;
 
-  // 6. Section Total
+  
   doc.setFillColor(248, 245, 240);
   doc.roundedRect(110, finalY - 15, 80, 35, 4, 4, 'F');
 
@@ -135,7 +135,7 @@ export const generateInvoicePDF = (booking, isUser = false) => {
   doc.setTextColor(champagneColor[0], champagneColor[1], champagneColor[2]);
   doc.text(`${totalPrice} DH`, 185, finalY + 6, null, null, "right");
 
-  // 7. Bas de page
+  
   doc.setFontSize(9);
   doc.setTextColor(150);
   doc.setFont("helvetica", "italic");

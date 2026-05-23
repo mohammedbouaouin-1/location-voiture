@@ -20,15 +20,15 @@ export default function CarDetails() {
   const [car, setCar] = useState(null);
   const [loading, setLoading] = useState(true);
   
-  // Reviews state
+  
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   const [comment, setComment] = useState("");
 
-  // Gallery state
+  
   const [activeImage, setActiveImage] = useState(0);
 
-  // Dynamic Calculator state
+  
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -84,10 +84,10 @@ export default function CarDetails() {
 
   const averageRating = car.rating || 5;
 
-  // Fake gallery array
+  
   const images = [car.image, car.image, car.image];
 
-  // Dynamic Calculation
+  
   let totalDays = 0;
   let totalPrice = 0;
   if (startDate && endDate) {
@@ -100,7 +100,7 @@ export default function CarDetails() {
     }
   }
 
-  // Fake detailed ratings
+  
   const detailedRatings = [
     { label: "Confort", value: 4.8 },
     { label: "Propreté", value: 5.0 },
@@ -110,20 +110,20 @@ export default function CarDetails() {
   return (
     <div className="min-h-screen pt-24 pb-24 bg-white">
       
-      {/* 🚀 SHOWROOM HERO (Premium Studio) 🚀 */}
+      {}
       <div className="relative w-full max-w-7xl mx-auto px-6 mb-16">
         
-        {/* Bouton Retour superposé */}
+        {}
         <div className="absolute top-4 left-6 z-30">
           <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-[#4B5563] hover:text-[#111827] font-extrabold uppercase tracking-widest text-[10px] transition-all bg-white/80 backdrop-blur-md px-4 py-2 rounded-full shadow-sm border border-gray-200/50">
             <FaArrowLeft size={10} /> Retour
           </button>
         </div>
 
-        {/* Scène Studio 3D */}
+        {}
         <div className="w-full h-[50vh] lg:h-[65vh] bg-gradient-to-b from-gray-50 to-gray-200/40 rounded-[48px] overflow-hidden flex items-center justify-center relative shadow-[inset_0_-20px_50px_rgba(0,0,0,0.02)]">
            
-           {/* Grande Typographie en Arrière-plan (Effet Marque) */}
+           {}
            <div className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden pointer-events-none select-none z-0">
              <span className="text-[15vw] lg:text-[180px] font-black text-gray-900/[0.03] uppercase tracking-tighter leading-none whitespace-nowrap">
                {car.brand || 'LOCAFÈS'}
@@ -133,7 +133,7 @@ export default function CarDetails() {
              </span>
            </div>
 
-           {/* Affichage de la voiture avec effet d'ombre au sol */}
+           {}
            <div className="relative z-10 w-full max-w-4xl h-full p-10 flex items-center justify-center group">
              <AnimatePresence mode="wait">
                <motion.img 
@@ -149,11 +149,11 @@ export default function CarDetails() {
                />
              </AnimatePresence>
 
-             {/* Ombre ovale artificielle au sol pour ancrer la voiture */}
+             {}
              <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-[60%] h-8 bg-black/15 blur-[20px] rounded-[100%] scale-y-50 pointer-events-none group-hover:w-[70%] group-hover:opacity-60 transition-all duration-700"></div>
            </div>
            
-           {/* Badge disponibilité Premium - Maintenant Fonctionnel */}
+           {}
            <div className="absolute top-6 right-6 z-20">
              <button 
                onClick={() => {
@@ -177,14 +177,14 @@ export default function CarDetails() {
         </div>
       </div>
 
-      {/* 🚀 CONTENT MAIN 🚀 */}
+      {}
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-start relative">
           
-          {/* ====== GAUCHE : DÉTAILS ====== */}
+          {}
           <div className="space-y-16">
             
-            {/* Header info (Left Side) */}
+            {}
             <div className="hidden lg:block border-b border-gray-100 pb-8">
                <h1 className="text-4xl md:text-5xl font-extrabold text-[#111827] mb-2 tracking-tight">{car.brand} {car.name}</h1>
                <div className="flex items-center gap-4 text-sm font-bold text-[#6B7280]">
@@ -196,7 +196,7 @@ export default function CarDetails() {
                </div>
             </div>
 
-            {/* Titre Mobile seulement */}
+            {}
             <div className="lg:hidden mb-12 border-b border-gray-100 pb-8">
               <h1 className="text-3xl font-extrabold text-[#111827] tracking-tight mb-2">{car.brand} {car.name}</h1>
               <div className="flex items-center gap-1 text-amber-400 text-sm font-bold">
@@ -204,7 +204,7 @@ export default function CarDetails() {
               </div>
             </div>
 
-            {/* Galerie Interactive Miniature */}
+            {}
             <div>
               <p className="text-[10px] font-black uppercase tracking-widest text-[#9CA3AF] mb-4">Aperçu Galerie (Démo)</p>
               <div className="flex gap-4">
@@ -220,7 +220,7 @@ export default function CarDetails() {
               </div>
             </div>
 
-            {/* Spécifications BENTO GRID - Ultra clean */}
+            {}
             <div>
               <h3 className="text-xl font-extrabold text-[#111827] mb-6">Spécifications Techniques</h3>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -233,7 +233,7 @@ export default function CarDetails() {
               </div>
             </div>
 
-            {/* Services Inclus Modernes */}
+            {}
             <div>
               <h3 className="text-xl font-extrabold text-[#111827] mb-6">Inclus avec la location</h3>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -255,12 +255,12 @@ export default function CarDetails() {
               </div>
             )}
 
-            {/* Notes Détaillées & Avis */}
+            {}
             <div className="pt-12 border-t border-gray-100">
               <h3 className="text-2xl font-extrabold text-[#111827] mb-10">Avis Clients ({car.numReviews || 0})</h3>
               
               <div className="grid md:grid-cols-2 gap-12 mb-12">
-                {/* Jauges détaillées ultra-minimalistes */}
+                {}
                 <div className="space-y-6">
                   {detailedRatings.map((r, i) => (
                     <div key={i}>
@@ -276,10 +276,10 @@ export default function CarDetails() {
                 </div>
               </div>
 
-              {/* Section Liste des Avis + Formulaire */}
+              {}
               <div className="grid md:grid-cols-2 gap-12">
                 
-                {/* Liste Avis existants de ton code... */}
+                {}
                 <div className="space-y-6">
                   {car.reviews?.length > 0 ? (
                     car.reviews.map(review => (
@@ -296,7 +296,7 @@ export default function CarDetails() {
                   )}
                 </div>
 
-                {/* Formulaire pour Laisser un Avis */}
+                {}
                 <div>
                   {currentUser ? (
                     <div className="bg-gray-50 p-8 rounded-[24px] border border-gray-100">
@@ -449,7 +449,7 @@ export default function CarDetails() {
   );
 }
 
-// Mini composant pour la grille Bento ultra claire
+
 function BentoCard({ icon, label, value }) {
   return (
     <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 flex flex-col justify-between group hover:bg-white hover:shadow-lg shadow-gray-100 transition-all cursor-default h-full min-h-[120px]">

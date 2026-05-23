@@ -20,7 +20,7 @@ export default function SettingsTab() {
 
   return (
     <div className="space-y-10 text-left">
-      {/* Header */}
+      {}
       <div className="flex items-center gap-4">
         <div className="w-1.5 h-10 bg-[#111827] rounded-full" />
         <div>

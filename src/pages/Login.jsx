@@ -50,7 +50,7 @@ export default function Login() {
         const user = await login(formData.email, formData.password);
         toast.success("Ravi de vous revoir !");
         
-        // Redirection basée sur le rôle
+        
         if (user.role === 'admin') {
           navigate('/dashboard', { replace: true });
           return;
@@ -71,7 +71,7 @@ export default function Login() {
         <meta name="description" content="Connectez-vous à votre compte LocaFès pour gérer vos réservations." />
       </Helmet>
 
-      {/* Côté Gauche - Image & Branding (Hidden on mobile) */}
+      {}
       <div className="hidden lg:flex lg:w-[55%] relative overflow-hidden bg-[#0A0A0A]">
         <motion.img 
           initial={{ scale: 1.1 }}

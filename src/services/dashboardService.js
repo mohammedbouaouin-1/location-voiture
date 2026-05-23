@@ -5,7 +5,7 @@ export const getDashboardStats = async (period = '7j') => {
     return response.data;
 };
 
-// Bug #4 fix: pass pagination/search params
+
 export const getUsers = async (params = {}) => {
     const query = new URLSearchParams(params).toString();
     const response = await api.get(`/api/users${query ? `?${query}` : ''}`);

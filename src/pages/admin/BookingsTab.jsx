@@ -76,7 +76,7 @@ export default function BookingsTab({
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
-          {/* Export CSV */}
+          {}
           <button
             onClick={() => exportCSV(bookings)}
             className="px-5 py-4 bg-emerald-50 text-emerald-700 rounded-2xl font-black text-[10px] tracking-widest uppercase hover:bg-emerald-100 transition-all flex items-center gap-2 border border-emerald-100"
@@ -84,7 +84,7 @@ export default function BookingsTab({
             <FaDownload /> Export CSV
           </button>
 
-          {/* Search */}
+          {}
           <div className="relative group min-w-[260px]">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6B7280]" />
             <input

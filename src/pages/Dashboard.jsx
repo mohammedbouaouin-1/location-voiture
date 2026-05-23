@@ -13,9 +13,9 @@ import BookingsTab from './admin/BookingsTab';
 import CarsTab from './admin/CarsTab';
 import SettingsTab from './admin/SettingsTab';
 
-// ─────────────────────────────────────────
-// Custom Confirm Modal (replaces window.confirm)
-// ─────────────────────────────────────────
+
+
+
 function ConfirmModal({ message, onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">
@@ -57,9 +57,9 @@ function ConfirmModal({ message, onConfirm, onCancel }) {
   );
 }
 
-// ─────────────────────────────────────────
-// Status labels FR
-// ─────────────────────────────────────────
+
+
+
 const STATUS_LABELS = {
   pending: 'En attente',
   confirmed: 'Confirmé',
@@ -74,9 +74,9 @@ const STATUS_STYLES = {
   completed: 'bg-[#F8F5F0] text-[#C4A47C] border-[#E8DDD0]',
 };
 
-// ─────────────────────────────────────────
-// Skeleton Loader
-// ─────────────────────────────────────────
+
+
+
 function SkeletonRow({ cols = 5 }) {
   return (
     <tr className="border-b border-gray-50">
@@ -123,9 +123,9 @@ function SkeletonTable({ cols = 5 }) {
   );
 }
 
-// ─────────────────────────────────────────
-// Main Dashboard
-// ─────────────────────────────────────────
+
+
+
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -153,14 +153,14 @@ export default function Dashboard() {
   const [showUserEditModal, setShowUserEditModal] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
 
-  // Custom confirm modal state
-  const [confirmModal, setConfirmModal] = useState(null); // { message, onConfirm }
+  
+  const [confirmModal, setConfirmModal] = useState(null); 
 
   const showConfirm = (message, onConfirm) => {
     setConfirmModal({ message, onConfirm });
   };
 
-  // Pending bookings for notifications and local list for dropdown
+  
   const pendingCount = activeTab === 'bookings' 
     ? bookings.filter(b => b.status === 'pending').length 
     : (stats?.pendingBookingsCount || 0);
@@ -171,12 +171,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     fetchStats();
-  }, []); // Initial stats fetch for notification count
+  }, []); 
 
   useEffect(() => {
     setPage(1);
     fetchData(1);
-  }, [activeTab]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeTab]); 
 
   useEffect(() => {
     if (activeTab === 'overview') return;
@@ -185,7 +185,7 @@ export default function Dashboard() {
       fetchData(1);
     }, 400);
     return () => clearTimeout(timer);
-  }, [searchTerm]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [searchTerm]); 
 
   const fetchStats = async (period = '7j') => {
     try {
@@ -252,8 +252,8 @@ export default function Dashboard() {
           recentBookings: prev.recentBookings.map(b => (b._id || b.id) === id ? updated : b)
         }));
       }
-      await fetchData(page); // Re-fetch current data (bookings or overview)
-      fetchStats(); // Update badge count
+      await fetchData(page); 
+      fetchStats(); 
       toast.success(`Statut mis à jour : ${STATUS_LABELS[status] || status}`);
     } catch (err) {
       toast.error('Erreur lors de la mise à jour');
@@ -266,8 +266,8 @@ export default function Dashboard() {
       try {
         await deleteBooking(id);
         setBookings(bookings.filter(b => b._id !== id));
-        await fetchData(page); // Force refresh current tab
-        fetchStats(); // Update badge count
+        await fetchData(page); 
+        fetchStats(); 
         toast.success('Réservation supprimée');
       } catch (err) {
         toast.error('Erreur suppression');
@@ -383,7 +383,7 @@ export default function Dashboard() {
     </span>
   );
 
-  // ── Skeleton by tab ──
+  
   const renderSkeleton = () => {
     if (activeTab === 'overview') return <SkeletonOverview />;
     if (activeTab === 'bookings') return <SkeletonTable cols={5} />;
@@ -475,7 +475,7 @@ export default function Dashboard() {
         </div>
       </main>
 
-      {/* ── Custom Confirm Modal ── */}
+      {}
       <AnimatePresence>
         {confirmModal && (
           <ConfirmModal
@@ -486,7 +486,7 @@ export default function Dashboard() {
         )}
       </AnimatePresence>
 
-      {/* ── ADD CAR MODAL ── */}
+      {}
       <AnimatePresence>
         {showAddModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
@@ -558,7 +558,7 @@ export default function Dashboard() {
         )}
       </AnimatePresence>
 
-      {/* ── BOOKING DETAIL MODAL ── */}
+      {}
       <AnimatePresence>
         {showDetailModal && selectedBooking && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
@@ -610,7 +610,7 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Status badge */}
+                {}
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-black uppercase text-[#6B7280] tracking-widest">Statut actuel</span>
                   {getStatusBadge(selectedBooking.status)}
@@ -639,7 +639,7 @@ export default function Dashboard() {
         )}
       </AnimatePresence>
 
-      {/* ── EDIT CAR MODAL ── */}
+      {}
       <AnimatePresence>
         {showEditModal && editingCar && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
@@ -668,7 +668,7 @@ export default function Dashboard() {
                 </div>
                 <div className="sm:col-span-2 space-y-3">
                   <label className="text-[10px] font-black uppercase text-[#6B7280] tracking-widest ml-1">Photo (optionnel)</label>
-                  {/* Current image preview */}
+                  {}
                   {(editImagePreview || editingCar.image) && (
                     <div className="relative rounded-2xl overflow-hidden h-40 border border-gray-100 shadow-sm mb-3">
                       <img src={editImagePreview || editingCar.image} alt="Aperçu" className="w-full h-full object-cover" />
@@ -713,7 +713,7 @@ export default function Dashboard() {
         )}
       </AnimatePresence>
 
-      {/* ── EDIT USER MODAL ── */}
+      {}
       <AnimatePresence>
         {showUserEditModal && editingUser && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">

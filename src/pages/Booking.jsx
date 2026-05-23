@@ -88,7 +88,7 @@ export default function Booking() {
 
 
 
-  // Ouvre la modale de confirmation — appelé depuis le bouton Finaliser (étape 3)
+  
   const handleOpenConfirm = async () => {
     if (days <= 0) {
       toast.error("La date de fin doit être après la date de début");
@@ -96,7 +96,7 @@ export default function Booking() {
     }
 
     if (payment === 'card') {
-      // Pour carte : générer le Payment Intent Stripe avant d'ouvrir la modale
+      
       try {
         setSubmitting(true);
         const response = await createPaymentIntent({
@@ -114,12 +114,12 @@ export default function Booking() {
         setSubmitting(false);
       }
     } else {
-      // Pour espèces : ouvrir la modale directement
+      
       setShowConfirmModal(true);
     }
   };
 
-  // Confirme une réservation en espèces
+  
   const finalConfirm = async () => {
     setShowConfirmModal(false);
     setSubmitting(true);
@@ -151,13 +151,13 @@ export default function Booking() {
     }
   };
 
-  // Appelé par StripePaymentForm après un paiement réussi.
-  // Déclenche la création manuelle de la réservation après paiement Stripe.
-  // NB: En production, le webhook Stripe agit comme sécurité, mais appeler l'API ici assure un retour instantané, surtout en local.
+  
+  
+  
   const onStripeSuccess = async () => {
     setShowConfirmModal(false);
     
-    // 1. Sauvegarder explicitement la réservation dans la Base de données
+    
     try {
       await createBooking({
         car: car._id || car.id,
@@ -166,12 +166,12 @@ export default function Booking() {
         totalPrice: total,
         totalDays: days,
         fullName: formData.fullName,
-        paymentMethod: 'card', // On précise carte bancaire
+        paymentMethod: 'card', 
         phone: formData.phone
       });
       toast.success("Paiement validé ! Réservation enregistrée avec succès.");
       
-      // 2. Rediriger vers la page de succès
+      
       const params = new URLSearchParams({
         carId: car._id || car.id,
         startDate: formData.startDate,
@@ -203,14 +203,14 @@ export default function Booking() {
 
         <div className="grid lg:grid-cols-3 gap-10">
 
-          {/* Main Form */}
+          {}
           <div className="lg:col-span-2 space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="bg-white rounded-[32px] shadow-xl shadow-gray-200/50 p-10 border border-white"
             >
-              {/* Stepper Header */}
+              {}
               <div className="mb-10">
                 <div className="flex items-center gap-4 mb-6">
                   <div className="w-14 h-14 bg-[#F8F5F0] rounded-2xl flex items-center justify-center">
@@ -222,7 +222,7 @@ export default function Booking() {
                   </div>
                 </div>
 
-                {/* Progress Bar */}
+                {}
                 <div className="relative pt-4">
                   <div className="flex justify-between mb-2">
                     <span className={`text-[10px] font-bold uppercase tracking-widest ${currentStep >= 1 ? 'text-[#C4A47C]' : 'text-gray-400'}`}>1. Conducteur</span>
@@ -242,7 +242,7 @@ export default function Booking() {
 
               <div className="space-y-8">
 
-                {/* Step 1: Personal Info */}
+                {}
                 {currentStep === 1 && (
                   <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                     <h3 className="text-sm font-extrabold text-[#111827] uppercase tracking-widest flex items-center gap-2">
@@ -277,7 +277,7 @@ export default function Booking() {
                   </motion.div>
                 )}
 
-                {/* Step 2: Dates */}
+                {}
                 {currentStep === 2 && (
                   <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                     <h3 className="text-sm font-extrabold text-[#111827] uppercase tracking-widest flex items-center gap-2">
@@ -316,7 +316,7 @@ export default function Booking() {
                   </motion.div>
                 )}
 
-                {/* Step 3: Payment Method */}
+                {}
                 {currentStep === 3 && (
                   <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                     <h3 className="text-sm font-extrabold text-[#111827] uppercase tracking-widest flex items-center gap-2">
@@ -325,7 +325,7 @@ export default function Booking() {
                     </h3>
 
                     <div className="grid sm:grid-cols-2 gap-4">
-                      {/* Option CASH */}
+                      {}
                       <button
                         type="button"
                         onClick={() => setPayment('cash')}
@@ -349,7 +349,7 @@ export default function Booking() {
                         </div>
                       </button>
 
-                      {/* Option CARD */}
+                      {}
                       <button
                         type="button"
                         onClick={() => setPayment('card')}
@@ -374,7 +374,7 @@ export default function Booking() {
                       </button>
                     </div>
 
-                    {/* Bandeau informatif selon le choix */}
+                    {}
                     <motion.div
                       key={payment}
                       initial={{ opacity: 0, y: 10 }}
@@ -391,7 +391,7 @@ export default function Booking() {
                   </motion.div>
                 )}
 
-                {/* Navigation Buttons */}
+                {}
                 <div className="flex items-center justify-between gap-4 pt-6 border-t border-gray-50">
                   {currentStep > 1 && (
                     <button
@@ -427,7 +427,7 @@ export default function Booking() {
             </motion.div>
           </div>
 
-          {/* Sticky Summary Card */}
+          {}
           <div className="lg:col-span-1">
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -471,7 +471,7 @@ export default function Booking() {
         </div>
       </div>
 
-      {/* Confirmation Modal */}
+      {}
       <AnimatePresence>
         {showConfirmModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-6">
@@ -497,7 +497,7 @@ export default function Booking() {
               </div>
               
               <div className="space-y-4 mb-8">
-                {/* Car summary */}
+                {}
                 <div className="flex justify-between items-center bg-gray-50 p-4 rounded-2xl">
                    <div>
                      <p className="text-[10px] font-black uppercase tracking-widest text-[#C4A47C] mb-1">{car.brand || 'Premium'}</p>
@@ -506,7 +506,7 @@ export default function Booking() {
                    <img src={car.image} alt={car.name} className="w-20 h-12 object-cover rounded-lg shadow-sm" />
                 </div>
                 
-                {/* Dates */}
+                {}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-[#6B7280] mb-1">Prise en charge</p>
@@ -518,7 +518,7 @@ export default function Booking() {
                   </div>
                 </div>
 
-                {/* Total */}
+                {}
                 <div className="p-5 bg-[#111827] rounded-2xl text-white flex justify-between items-center shadow-lg shadow-black/8">
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-widest text-white/40 mb-1">{days} jour{days > 1 ? 's' : ''} de location</p>
@@ -528,7 +528,7 @@ export default function Booking() {
                 </div>
               </div>
 
-              {/* Action selon le mode de paiement */}
+              {}
               {payment === 'card' ? (
                 <div>
                   <div className="flex items-center gap-2 mb-5 px-4 py-3 bg-[#F8F5F0] rounded-2xl border border-[#E8DDD0]">
@@ -545,7 +545,7 @@ export default function Booking() {
                       <p className="text-xs text-[#6B7280]">Veuillez configurer REACT_APP_STRIPE_PUBLIC_KEY dans le fichier .env</p>
                     </div>
                   )}
-                  {/* Bouton annuler supprimé car croix en haut à droite */}
+                  {}
                 </div>
               ) : (
                 <div>

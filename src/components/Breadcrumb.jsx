@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export default function Breadcrumb({ items }) {
-  // items: [{ label, to }, { label }]  — dernier sans `to`
+  
   return (
     <nav aria-label="Fil d'Ariane" className="flex items-center gap-1.5 text-sm mb-6 animate-fadeIn">
       {items.map((item, idx) => (

@@ -12,7 +12,7 @@ export const getMyBookings = async () => {
     return response.data;
 };
 
-// Bug #4 fix: pass pagination params to the API
+
 export const getAllBookings = async (params = {}) => {
     const query = new URLSearchParams(params).toString();
     const response = await api.get(`${API_URL}/admin${query ? `?${query}` : ''}`);
@@ -29,7 +29,7 @@ export const deleteBooking = async (id) => {
     return response.data;
 };
 
-// Bug #3 fix: correct Stripe URL — was /api/bookings/..., should be /api/stripe/...
+
 export const createPaymentIntent = async (bookingData) => {
     const response = await api.post('/api/stripe/create-payment-intent', bookingData);
     return response.data;

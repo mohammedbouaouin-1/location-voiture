@@ -86,7 +86,7 @@ const getAllBookings = async (req, res) => {
     const skip = (page - 1) * limit;
     const { search } = req.query;
 
-    // Recherche sur le nom du conducteur ou le téléphone
+    
     const query = {};
     if (search) {
       query.$or = [

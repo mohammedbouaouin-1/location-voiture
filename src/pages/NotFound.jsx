@@ -5,7 +5,7 @@ import { FaHome, FaSearch } from 'react-icons/fa';
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6 bg-[#F9FAFB] relative overflow-hidden">
-      {/* Background Decorative Blob */}
+      {}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#F0EBE3]/50 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="text-center z-10 max-w-2xl">

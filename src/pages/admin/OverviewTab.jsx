@@ -29,7 +29,7 @@ const PERIODS = [
   { key: 'annee', label: 'Année' },
 ];
 
-// Fake sparkline data per KPI
+
 const SPARKLINES = {
   users:    [3, 5, 4, 7, 6, 9, 11],
   cars:     [18, 18, 19, 20, 20, 20, 20],
@@ -44,7 +44,7 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
 
   useEffect(() => {
     if (fetchStats) fetchStats(period);
-  }, [period]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [period]); 
 
   if (!stats) return null;
 
@@ -108,7 +108,7 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
   return (
     <div className="space-y-10">
 
-      {/* ===== HEADER + LIVE BADGE ===== */}
+      {}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-1.5 h-8 bg-[#111827] rounded-full" />
@@ -125,35 +125,35 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
 
       </div>
 
-      {/* ===== KPI CARDS with Sparklines ===== */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {kpiCards.map((card, i) => (
           <div
             key={i}
             className={`relative bg-white p-7 rounded-[28px] shadow-lg ${card.glow} border ${card.border} hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden group`}
           >
-            {/* Background gradient accent */}
+            {}
             <div className={`absolute -top-8 -right-8 w-24 h-24 rounded-full ${card.bg} opacity-60 group-hover:scale-125 transition-transform duration-500`} />
 
             <div className="relative z-10">
-              {/* Icon */}
+              {}
               <div className={`inline-flex items-center justify-center w-11 h-11 rounded-2xl ${card.bg} ${card.color} mb-5 shadow-sm`}>
                 {card.icon}
               </div>
 
-              {/* Label */}
+              {}
               <p className="text-[10px] font-black uppercase tracking-widest text-[#6B7280] mb-1">{card.label}</p>
 
-              {/* Value */}
+              {}
               <h3 className="text-2xl font-black tracking-tight text-[#111827] mb-3">{card.val}</h3>
 
-              {/* Trend */}
+              {}
               <div className={`flex items-center gap-1.5 text-[10px] font-black mb-4 ${card.trend >= 0 ? 'text-emerald-600' : 'text-rose-500'}`}>
                 {card.trend >= 0 ? <FaArrowUp className="text-[8px]" /> : <FaArrowDown className="text-[8px]" />}
                 <span>{Math.abs(card.trend)}% ce mois</span>
               </div>
 
-              {/* ✨ Mini Sparkline */}
+              {}
               <div className="h-10">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={card.sparkData.map((v, idx) => ({ v, idx }))}>
@@ -179,14 +179,14 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
         ))}
       </div>
 
-      {/* ===== AREA CHART ===== */}
+      {}
       <div className="bg-white rounded-[36px] p-8 shadow-sm border border-gray-50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h3 className="text-lg font-black uppercase tracking-widest text-[#111827]">Évolution des Réservations</h3>
             <p className="text-xs text-[#6B7280] font-bold mt-0.5">Activité sur la période sélectionnée</p>
           </div>
-          {/* Period filter pills */}
+          {}
           <div className="flex items-center gap-1.5 bg-[#F9FAFB] p-1.5 rounded-2xl border border-gray-100">
             {PERIODS.map(p => (
               <button
@@ -244,10 +244,10 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
         </div>
       </div>
 
-      {/* ===== RECENT BOOKINGS (Mini Table) + New Users ===== */}
+      {}
       <div className="grid lg:grid-cols-2 gap-8">
 
-        {/* 📋 Recent Bookings — Mini Table */}
+        {}
         <div className="bg-white rounded-[36px] p-8 shadow-sm border border-gray-50">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -262,14 +262,14 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
             </button>
           </div>
 
-          {/* Table Header */}
+          {}
           <div className="grid grid-cols-[1fr_auto_auto] gap-3 px-3 mb-3">
             <span className="text-[9px] font-black uppercase tracking-widest text-[#9CA3AF]">Client / Voiture</span>
             <span className="text-[9px] font-black uppercase tracking-widest text-[#9CA3AF] text-right">Prix</span>
             <span className="text-[9px] font-black uppercase tracking-widest text-[#9CA3AF] text-right">Statut</span>
           </div>
 
-          {/* Table Rows */}
+          {}
           <div className="space-y-2">
             {stats.recentBookings?.map((booking) => {
               const statusBorderColor = {
@@ -284,9 +284,9 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
                   key={booking._id}
                   className={`grid grid-cols-[1fr_auto_auto] gap-3 items-center p-3.5 rounded-2xl bg-[#F9FAFB] border border-gray-50 border-l-4 ${statusBorderColor} hover:bg-white hover:shadow-md transition-all`}
                 >
-                  {/* Client + Car */}
+                  {}
                   <div className="flex items-center gap-3 min-w-0">
-                    {/* Car icon avatar */}
+                    {}
                     <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 border border-gray-100 shrink-0 flex items-center justify-center text-slate-400">
                       <FaCar size={15} />
                     </div>
@@ -305,12 +305,12 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
                     </div>
                   </div>
 
-                  {/* Price */}
+                  {}
                   <p className="text-sm font-extrabold text-[#C4A47C] whitespace-nowrap text-right">
                     {booking.totalPrice} <span className="text-[9px] text-[#6B7280] font-bold">DH</span>
                   </p>
 
-                  {/* Status */}
+                  {}
                   <div className="flex justify-end">
                     {getStatusBadge(booking.status)}
                   </div>
@@ -320,7 +320,7 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
           </div>
         </div>
 
-        {/* 👤 New Users */}
+        {}
         <div className="bg-white rounded-[36px] p-8 shadow-sm border border-gray-50">
           <div className="flex items-center justify-between mb-6">
             <div>
@@ -335,7 +335,7 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
             </button>
           </div>
 
-          {/* Table Header */}
+          {}
           <div className="grid grid-cols-[1fr_auto] gap-2 px-3 mb-3">
             <span className="text-[9px] font-black uppercase tracking-widest text-[#9CA3AF]">Utilisateur</span>
             <span className="text-[9px] font-black uppercase tracking-widest text-[#9CA3AF] text-right">Inscrit le</span>
@@ -358,7 +358,7 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
                   key={user._id}
                   className="grid grid-cols-[1fr_auto] gap-2 items-center p-3.5 rounded-2xl bg-[#F9FAFB] border border-gray-50 hover:bg-white hover:shadow-md hover:border-gray-100 transition-all"
                 >
-                  {/* Avatar + Name */}
+                  {}
                   <div className="flex items-center gap-3 min-w-0">
                     <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${avatarColors[colorIdx]} text-white flex items-center justify-center font-black text-sm shrink-0 shadow-md`}>
                       {(user.name?.charAt(0) || user.email?.charAt(0) || '?').toUpperCase()}
@@ -376,7 +376,7 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
                     </div>
                   </div>
 
-                  {/* Date */}
+                  {}
                   <span className="text-[10px] font-bold text-[#6B7280] whitespace-nowrap">
                     {new Date(user.createdAt).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
                   </span>

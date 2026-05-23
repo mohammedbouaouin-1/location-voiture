@@ -36,7 +36,7 @@ export default function CarsTab({
   totalPages,
   handlePageChange
 }) {
-  const [viewMode, setViewMode] = useState('table'); // 'table' | 'grid'
+  const [viewMode, setViewMode] = useState('table'); 
 
   const filtered = cars.filter(c =>
     c.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -45,7 +45,7 @@ export default function CarsTab({
 
   return (
     <div className="space-y-12 text-left">
-      {/* Header */}
+      {}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
         <div className="flex items-center gap-4">
           <div className="w-1.5 h-10 bg-[#111827] rounded-full" />
@@ -58,7 +58,7 @@ export default function CarsTab({
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
-          {/* Add button */}
+          {}
           <button
             onClick={() => setShowAddModal(true)}
             className="px-6 py-4 bg-[#111827] text-white rounded-2xl font-black text-[10px] tracking-widest uppercase shadow-lg shadow-black/10 hover:scale-105 transition-all flex items-center gap-3"
@@ -66,7 +66,7 @@ export default function CarsTab({
             <FaPlus /> Nouveau Véhicule
           </button>
 
-          {/* Export CSV */}
+          {}
           <button
             onClick={() => exportCSV(cars)}
             className="px-5 py-4 bg-emerald-50 text-emerald-700 rounded-2xl font-black text-[10px] tracking-widest uppercase hover:bg-emerald-100 transition-all flex items-center gap-2 border border-emerald-100"
@@ -74,7 +74,7 @@ export default function CarsTab({
             <FaDownload /> CSV
           </button>
 
-          {/* View toggle */}
+          {}
           <div className="flex items-center gap-1 bg-[#F9FAFB] p-1.5 rounded-2xl border border-gray-100">
             <button
               onClick={() => setViewMode('table')}
@@ -92,7 +92,7 @@ export default function CarsTab({
             </button>
           </div>
 
-          {/* Search */}
+          {}
           <div className="relative group min-w-[240px]">
             <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#6B7280]" />
             <input
@@ -107,7 +107,7 @@ export default function CarsTab({
       </div>
 
       <AnimatePresence mode="wait">
-        {/* ===== TABLE VIEW ===== */}
+        {}
         {viewMode === 'table' && (
           <motion.div
             key="table"
@@ -216,7 +216,7 @@ export default function CarsTab({
           </motion.div>
         )}
 
-        {/* ===== GRID VIEW ===== */}
+        {}
         {viewMode === 'grid' && (
           <motion.div
             key="grid"
@@ -237,14 +237,14 @@ export default function CarsTab({
                     animate={{ opacity: 1, scale: 1 }}
                     className="bg-white rounded-[32px] overflow-hidden shadow-sm border border-white hover:shadow-xl hover:-translate-y-1 transition-all group"
                   >
-                    {/* Car Image */}
+                    {}
                     <div className="relative h-48 overflow-hidden">
                       <img
                         src={car.image}
                         alt={car.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      {/* Status overlay */}
+                      {}
                       <div className="absolute top-4 right-4">
                         <button
                           onClick={() => handleToggleAvailability(car)}
@@ -265,7 +265,7 @@ export default function CarsTab({
                         <h4 className="text-lg font-black uppercase tracking-tight text-[#111827]">{car.name}</h4>
                       </div>
 
-                      {/* Specs */}
+                      {}
                       <div className="flex items-center gap-4 mb-5 text-[#6B7280]">
                         <div className="flex items-center gap-1.5">
                           <FaCalendarAlt size={10} />
@@ -281,7 +281,7 @@ export default function CarsTab({
                         </div>
                       </div>
 
-                      {/* Price + Actions */}
+                      {}
                       <div className="flex items-center justify-between">
                         <div>
                           <span className="text-2xl font-black text-[#C4A47C] italic">{car.price}</span>

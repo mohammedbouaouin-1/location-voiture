@@ -40,7 +40,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
-          {/* Brand & Mission */}
+          {}
           <div className="space-y-6">
             <Link to="/" className="flex items-center gap-2 text-2xl font-extrabold">
               <div className="bg-[#111827] p-2 rounded-xl shadow-lg shadow-black/10">

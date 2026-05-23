@@ -19,7 +19,7 @@ export default function StripePaymentForm({ onPaymentSuccess }) {
 
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      redirect: 'if_required', // Avoids automatic redirect if possible
+      redirect: 'if_required', 
     });
 
     if (error) {

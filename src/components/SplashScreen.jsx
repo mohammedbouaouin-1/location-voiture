@@ -8,7 +8,7 @@ export default function SplashScreen({ onComplete }) {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShow(false);
-      setTimeout(onComplete, 600); // Wait for exit animation
+      setTimeout(onComplete, 600); 
     }, 2200);
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -22,11 +22,11 @@ export default function SplashScreen({ onComplete }) {
           transition={{ duration: 0.5, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#1C1917]"
         >
-          {/* Decorative rings */}
+          {}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] border border-[#C4A47C]/10 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-[#C4A47C]/5 rounded-full animate-ping" style={{ animationDuration: '4s' }} />
 
-          {/* Logo */}
+          {}
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
@@ -38,7 +38,7 @@ export default function SplashScreen({ onComplete }) {
             </div>
           </motion.div>
 
-          {/* Brand name */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

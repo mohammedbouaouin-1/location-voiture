@@ -10,7 +10,7 @@ import { resolveImageUrl } from '../utils/imageUrl';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-// Loyalty tier system
+
 function getLoyaltyTier(bookingsCount) {
   if (bookingsCount >= 20) return { name: 'Platinum', icon: <FaCrown />, color: 'from-purple-500 to-indigo-500', bg: 'bg-purple-100', textColors: 'text-purple-600', ring: 'ring-purple-200', next: null, progress: 100 };
   if (bookingsCount >= 10) return { name: 'Gold', icon: <FaTrophy />, color: 'from-amber-400 to-orange-400', bg: 'bg-amber-100', textColors: 'text-amber-600', ring: 'ring-amber-200', next: 'Platinum', target: 20, progress: (bookingsCount / 20) * 100 };
@@ -129,26 +129,26 @@ export default function Profile() {
 
       <div className="max-w-6xl mx-auto px-6">
         
-        {/* ========== HEADER HERO (LIGHT THEME) ========== */}
+        {}
         <div className="bg-[#F8FAFC] border border-gray-100 rounded-[40px] p-10 md:p-14 mb-12 shadow-[0_4px_20px_-12px_rgba(0,0,0,0.05)] relative overflow-hidden">
-          {/* Decorative elements subtils */}
+          {}
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#F0EBE3]/50 rounded-full blur-[80px]" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-50/50 rounded-full blur-[60px]" />
           
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-10">
-            {/* Avatar */}
+            {}
             <div className="relative group shrink-0">
               <div className={`absolute inset-0 bg-gradient-to-br ${tier.color} rounded-full blur-md opacity-20 group-hover:opacity-40 transition-opacity`} />
               <div className={`relative w-28 h-28 rounded-[2rem] bg-white border-2 border-white shadow-xl flex items-center justify-center text-4xl font-extrabold ${tier.textColors}`}>
                 {currentUser.name?.charAt(0).toUpperCase()}
               </div>
-              {/* Tier badge */}
+              {}
               <div className={`absolute -bottom-2 -right-2 w-10 h-10 ${tier.bg} ${tier.textColors} rounded-2xl flex items-center justify-center text-sm shadow-md border-4 border-[#F8FAFC]`}>
                 {tier.icon}
               </div>
             </div>
             
-            {/* User info */}
+            {}
             <div className="text-center md:text-left flex-1 min-w-0">
               <div className="flex flex-col md:flex-row md:items-center gap-3 mb-2">
                 <h1 className="text-3xl md:text-4xl font-extrabold text-[#111827] tracking-tight truncate">{currentUser.name}</h1>
@@ -158,7 +158,7 @@ export default function Profile() {
               </div>
               <p className="text-sm font-bold text-[#6B7280]">{currentUser.email}</p>
               
-              {/* Loyalty progress */}
+              {}
               {tier.next && (
                 <div className="mt-6 max-w-sm mx-auto md:mx-0">
                   <div className="flex justify-between items-center mb-1.5">
@@ -177,7 +177,7 @@ export default function Profile() {
               )}
             </div>
             
-            {/* Quick stats Bento */}
+            {}
             <div className="flex gap-4 w-full md:w-auto shrink-0 mt-6 md:mt-0">
               <div className="flex-1 md:flex-none text-center p-5 rounded-[24px] bg-white border border-gray-100 shadow-sm shadow-gray-100 min-w-[100px]">
                 <p className="text-3xl font-black text-[#111827]">{bookings.length}</p>
@@ -193,11 +193,11 @@ export default function Profile() {
 
         <div className="grid lg:grid-cols-4 gap-10">
           
-          {/* ========== SIDEBAR ========== */}
+          {}
           <div className="lg:col-span-1">
             <div className="sticky top-32 space-y-6">
               
-              {/* Navigation */}
+              {}
               <div className="bg-[#F8FAFC] rounded-[32px] p-3 shadow-sm border border-gray-100">
                 <button 
                   onClick={() => setActiveTab('bookings')}
@@ -226,7 +226,7 @@ export default function Profile() {
                 </button>
               </div>
 
-              {/* Quick Actions */}
+              {}
               <Link 
                 to="/cars"
                 className="flex items-center gap-3 w-full px-6 py-4 bg-[#111827] rounded-[24px] text-sm font-black text-white hover:bg-black hover:-translate-y-1 hover:shadow-xl hover:shadow-gray-200 transition-all group"
@@ -238,15 +238,15 @@ export default function Profile() {
             </div>
           </div>
 
-          {/* ========== MAIN CONTENT ========== */}
+          {}
           <div className="lg:col-span-3">
             <AnimatePresence mode="wait">
               
-              {/* TAB: BOOKINGS */}
+              {}
               {activeTab === 'bookings' && (
                 <motion.div key="bookings" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
                   
-                  {/* Filter pills */}
+                  {}
                   <div className="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
                     {[
                       { key: 'all', label: 'Toutes' },
@@ -308,7 +308,7 @@ export default function Profile() {
                           className="bg-white rounded-[32px] p-5 border border-gray-100 shadow-[0_4px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_40px_-15px_rgba(0,0,0,0.1)] transition-all duration-300 group"
                         >
                           <div className="flex flex-col md:flex-row gap-6">
-                            {/* Car Image - Minimalist */}
+                            {}
                             <div className="w-full md:w-48 h-32 bg-[#F8FAFC] rounded-2xl overflow-hidden shrink-0 border border-gray-50 flex items-center justify-center p-2 relative">
                               {booking.car?.image ? (
                                 <img 
@@ -323,7 +323,7 @@ export default function Profile() {
                               )}
                             </div>
 
-                            {/* Booking Info */}
+                            {}
                             <div className="flex-1 flex flex-col justify-between py-1">
                               <div>
                                 <div className="flex justify-between items-start gap-3 mb-2">
@@ -376,7 +376,7 @@ export default function Profile() {
                 </motion.div>
               )}
 
-              {/* TAB: SETTINGS */}
+              {}
               {activeTab === 'settings' && (
                 <motion.div key="settings" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="space-y-8">
                   
@@ -394,7 +394,7 @@ export default function Profile() {
                     <form onSubmit={handleProfileUpdate} className="space-y-6">
                       <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
                         
-                        {/* Name Field */}
+                        {}
                         <div className="space-y-2">
                           <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Nom Complet
@@ -411,7 +411,7 @@ export default function Profile() {
                           </div>
                         </div>
 
-                        {/* Email Field */}
+                        {}
                         <div className="space-y-2">
                           <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Adresse Email
@@ -429,7 +429,7 @@ export default function Profile() {
                           </div>
                         </div>
 
-                        {/* Phone Field */}
+                        {}
                         <div className="space-y-2">
                           <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Téléphone
@@ -447,7 +447,7 @@ export default function Profile() {
                           </div>
                         </div>
 
-                        {/* Password Field */}
+                        {}
                         <div className="space-y-2">
                           <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Nouveau Mot de Passe
@@ -489,7 +489,7 @@ export default function Profile() {
                     </form>
                   </div>
 
-                  {/* Danger zone - Épurée */}
+                  {}
                   <div className="bg-[#FFF5F5] rounded-[32px] p-8 border border-rose-100 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
                       <h4 className="text-sm font-extrabold text-rose-600 mb-1">Déconnexion de l'appareil</h4>
@@ -509,7 +509,7 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Confirm Cancel Modal - Épuré */}
+      {}
       <AnimatePresence>
         {confirmCancel && (
           <div className="fixed inset-0 z-[200] flex items-center justify-center p-6">

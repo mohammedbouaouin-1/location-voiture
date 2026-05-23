@@ -79,7 +79,7 @@ export default function WhyChooseUs() {
 
       <div className="max-w-7xl mx-auto px-6">
 
-        {/* ========== HEADER ========== */}
+        {}
         <div className="text-center mb-24">
           <motion.span 
             initial={{ opacity: 0, y: 10 }}

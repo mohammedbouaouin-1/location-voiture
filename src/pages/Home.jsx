@@ -7,7 +7,7 @@ import SkeletonCard from "../components/SkeletonCard";
 import { getCars } from "../services/carService";
 import { FaClock, FaShieldAlt, FaStar, FaUsers, FaCar, FaMoneyBillWave, FaHeadset, FaArrowRight, FaRoute, FaCheckCircle, FaPhoneAlt } from "react-icons/fa";
 
-// Rotating words for hero headline
+
 const ROTATING_WORDS = [
   { text: "l'Émotion", color: "text-[#C4A47C]" },
   { text: "le Luxe", color: "text-amber-400" },
@@ -15,7 +15,7 @@ const ROTATING_WORDS = [
   { text: "l'Aventure", color: "text-amber-400" },
 ];
 
-// Hero car carousel data
+
 const HERO_CARS = [
   { src: "/images/Hyundai Tucson 2023.webp",  name: "Hyundai Tucson",    year: 2023, price: 600, tag: "SUV Premium" },
   { src: "/images/Toyota Yaris 2022.png",       name: "Toyota Yaris",     year: 2022, price: 420, tag: "Citadine Sport" },
@@ -24,7 +24,7 @@ const HERO_CARS = [
   { src: "/images/peugeot-208 2021.png",      name: "Peugeot 208",      year: 2021, price: 400, tag: "Citadine" },
 ];
 
-const CAROUSEL_INTERVAL = 4000; // ms
+const CAROUSEL_INTERVAL = 4000; 
 
 function RotatingText() {
   const [index, setIndex] = useState(0);
@@ -55,7 +55,7 @@ function RotatingText() {
   );
 }
 
-// Animated counter hook
+
 function useCountUp(target, duration = 2000, startOnView = true) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
@@ -83,7 +83,7 @@ function useCountUp(target, duration = 2000, startOnView = true) {
     const animate = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // Ease out cubic
+      
       const easeOut = 1 - Math.pow(1 - progress, 3);
       const current = start + (numTarget - start) * easeOut;
       setCount(isFloat ? current.toFixed(1) : Math.round(current));
@@ -118,7 +118,7 @@ export default function Home() {
 
   const featuredCars = cars.slice(0, 6);
   
-  // Extraire les vrais avis de tous les véhicules
+  
   const topReviews = useMemo(() => {
     let allReviews = [];
     cars.forEach(car => {
@@ -128,7 +128,7 @@ export default function Home() {
         });
       }
     });
-    // Trier par date (les plus récents d'abord) et prendre les 3 premiers
+    
     return allReviews
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       .slice(0, 3);
@@ -172,22 +172,22 @@ export default function Home() {
         <meta property="og:title" content="LocaFès - Location de Voitures Premium" />
         <meta property="og:description" content="Découvrez notre flotte exclusive à Fès." />
       </Helmet>
-      {/* ========== HERO SECTION (MIDNIGHT PREMIUM) ========== */}
+      {}
       <section className="relative min-h-[100vh] bg-midnight pt-20 overflow-hidden flex items-center">
 
-        {/* Dot Grid Background */}
+        {}
         <div className="absolute inset-0 opacity-[0.12]" style={{
           backgroundImage: 'radial-gradient(circle, #4B5563 1px, transparent 1px)',
           backgroundSize: '32px 32px'
         }} />
 
-        {/* Ambient Glows */}
+        {}
         <div className="absolute top-[-5%] left-[-5%] w-[50%] h-[50%] bg-[#C4A47C]/10 blur-[140px] rounded-full" />
         <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-[#8B7355]/12 blur-[140px] rounded-full" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#C4A47C]/5 rounded-full pointer-events-none" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] border border-white/[0.02] rounded-full pointer-events-none" />
 
-        {/* Animated Beam */}
+        {}
         <motion.div
           animate={{ x: ['-100%', '200%'] }}
           transition={{ duration: 8, repeat: Infinity, ease: 'linear', delay: 2 }}
@@ -197,14 +197,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10 py-20 lg:py-10">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-            {/* ===== LEFT: Text Content ===== */}
+            {}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="w-full lg:w-1/2 text-center lg:text-left"
             >
-              {/* Live badge */}
+              {}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -215,7 +215,7 @@ export default function Home() {
                 Disponible maintenant à Fès
               </motion.div>
 
-              {/* Headline */}
+              {}
               <h1 className="text-5xl md:text-7xl lg:text-7xl font-black mb-6 leading-[1.05] tracking-tighter text-white">
                 Louez <RotatingText />,<br />
                 Conduisez le{" "}
@@ -234,7 +234,7 @@ export default function Home() {
                 Location de voitures premium à Fès — service sur-mesure, flotte irréprochable, disponibilité immédiate.
               </p>
 
-              {/* CTAs */}
+              {}
               <div className="flex flex-wrap gap-4 justify-center lg:justify-start mb-10">
                 <Link
                   to="/cars"
@@ -251,7 +251,7 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* Inline trust signals */}
+              {}
               <div className="flex flex-wrap items-center gap-6 justify-center lg:justify-start">
                 <div className="flex items-center gap-2 text-slate-400 text-sm">
                   <FaCheckCircle className="text-emerald-400" size={14} />
@@ -272,7 +272,7 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* ===== RIGHT: Car Carousel ===== */}
+            {}
             <HeroCarousel />
           </div>
 
@@ -282,7 +282,7 @@ export default function Home() {
 
 
 
-      {/* Stats Section with Animated Counters */}
+      {}
       <section className="py-20 bg-white border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -293,7 +293,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Cars Section */}
+      {}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="text-center mb-16">
@@ -336,7 +336,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
+      {}
       <section className="py-24 bg-[#F9FAFB] scroll-mt-20" id="why-choose-us">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="text-center mb-20">
@@ -374,7 +374,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials section */}
+      {}
       <section className="py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <div className="text-center mb-16">
@@ -423,9 +423,9 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== FINAL CTA SECTION (PREMIUM) ========== */}
+      {}
       <section className="relative py-32 lg:py-48 bg-midnight overflow-hidden">
-        {/* Animated gradient orbs */}
+        {}
         <motion.div 
           animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.2, 1] }}
           transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
@@ -436,7 +436,7 @@ export default function Home() {
           transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
           className="absolute bottom-[10%] right-[10%] w-[350px] h-[350px] bg-[#8B7355]/8 blur-[120px] rounded-full"
         />
-        {/* Background Decorative Rings */}
+        {}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-[#C4A47C]/10 rounded-full"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] border border-[#C4A47C]/5 rounded-full"></div>
         
@@ -447,10 +447,10 @@ export default function Home() {
             viewport={{ once: true }}
             className="glass-morphism p-12 lg:p-24 rounded-[48px] border border-white/10 text-center relative overflow-hidden"
           >
-            {/* Inner Glow */}
+            {}
             <div className="absolute top-[-20%] left-[-20%] w-[50%] h-[50%] bg-[#C4A47C]/8 blur-[100px] rounded-full"></div>
 
-            {/* Voiture Fantôme Flottante au Centre */}
+            {}
             <motion.div 
               animate={{ y: [-10, 10, -10] }} 
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -490,7 +490,7 @@ export default function Home() {
               </div>
             </div>
             
-            {/* Small Floating Details */}
+            {}
             <div className="absolute bottom-10 left-10 text-left hidden md:block">
               <p className="text-[10px] text-slate-500 font-extrabold uppercase tracking-widest mb-1">Support 24/7</p>
               <p className="text-white/80 font-bold">+212 6 XX XX XX XX</p>
@@ -502,7 +502,7 @@ export default function Home() {
   );
 }
 
-// Animated stat component with counter
+
 function AnimatedStat({ stat, delay }) {
   const { count, ref } = useCountUp(stat.value, 2000 + delay);
   
@@ -526,10 +526,10 @@ function AnimatedStat({ stat, delay }) {
   );
 }
 
-// ====== HERO CAR CAROUSEL ======
+
 function HeroCarousel() {
   const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(1); // 1=forward, -1=backward
+  const [direction, setDirection] = useState(1); 
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef(null);
   const progressRef = useRef(null);
@@ -547,9 +547,9 @@ function HeroCarousel() {
     setProgress(0);
   };
 
-  // Auto-advance + progress bar
+  
   useEffect(() => {
-    // Progress bar tick (every 40ms = 100 steps for 4000ms)
+    
     progressRef.current = setInterval(() => {
       setProgress(p => {
         if (p >= 100) return 100;
@@ -557,14 +557,14 @@ function HeroCarousel() {
       });
     }, 40);
 
-    // Car switch
+    
     intervalRef.current = setInterval(next, CAROUSEL_INTERVAL);
 
     return () => {
       clearInterval(intervalRef.current);
       clearInterval(progressRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [current]);
 
   const car = HERO_CARS[current];
@@ -582,7 +582,7 @@ function HeroCarousel() {
       transition={{ duration: 1, ease: "easeOut", delay: 0.15 }}
       className="w-full lg:w-1/2 relative select-none"
     >
-      {/* Car Image Carousel */}
+      {}
       <div className="relative z-10 animate-float overflow-visible">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
@@ -602,11 +602,11 @@ function HeroCarousel() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Ground glow — synced with car */}
+        {}
         <div className="absolute bottom-[-8%] left-1/2 -translate-x-1/2 w-[70%] h-10 bg-[#0a0a0a]/40 blur-[50px] rounded-full scale-y-50" />
       </div>
 
-      {/* Badge 1 — Car name + tag (top right) */}
+      {}
       <motion.div
         animate={{ y: [0, -8, 0] }}
         transition={{ duration: 4, repeat: Infinity }}
@@ -632,7 +632,7 @@ function HeroCarousel() {
         </AnimatePresence>
       </motion.div>
 
-      {/* Badge 2 — Prix dynamique (bottom left) */}
+      {}
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
@@ -658,7 +658,7 @@ function HeroCarousel() {
         </div>
       </motion.div>
 
-      {/* Badge 3 — Assurance (middle left, static) */}
+      {}
       <motion.div
         animate={{ y: [0, -6, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, delay: 1 }}
@@ -668,9 +668,9 @@ function HeroCarousel() {
         <p className="text-white font-bold text-xs">Tous risques</p>
       </motion.div>
 
-      {/* Progress bar + dot indicators */}
+      {}
       <div className="absolute -bottom-8 left-0 right-0 flex flex-col items-center gap-2 z-20">
-        {/* Progress bar */}
+        {}
         <div className="w-2/3 h-0.5 bg-white/10 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-[#C4A47C] rounded-full"
@@ -678,7 +678,7 @@ function HeroCarousel() {
             transition={{ type: 'tween', ease: 'linear' }}
           />
         </div>
-        {/* Dots */}
+        {}
         <div className="flex items-center gap-2">
           {HERO_CARS.map((_, i) => (
             <button

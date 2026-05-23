@@ -1,70 +1,87 @@
-# Getting Started with Create React App
+# 🚗 LocaFès — Plateforme Premium de Location de Voitures
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bienvenue sur **LocaFès**, une application web moderne et élégante conçue pour simplifier la location de voitures à Fès et ses environs. Développée avec une architecture MERN (MongoDB, Express, React, Node.js), elle offre une expérience utilisateur ultra-fluide, rapide et sécurisée sur tous les appareils.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## ✨ Fonctionnalités Majeures
 
-### `npm start`
+### 💻 Pour les Clients :
+- **🚗 Exploration de la Flotte** : Parcourez un catalogue moderne avec des images haute définition et des fiches techniques détaillées.
+- **🔍 Filtres Avancés** : Filtrez les véhicules par type de carburant, boîte de vitesse, nom ou dates de disponibilité.
+- **📅 Réservations en Temps Réel** : Planifiez vos dates de location avec calcul automatique du prix total.
+- **💳 Paiement Sécurisé** : Intégration complète avec **Stripe** pour des transactions sécurisées par carte bancaire.
+- **📄 Facturation PDF** : Génération et téléchargement automatiques de factures PDF professionnelles après chaque réservation.
+- **📱 Entièrement Responsive** : Une interface soignée et fluide, optimisée pour smartphones, tablettes et ordinateurs.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 🛡️ Pour l'Administration :
+- **📊 Tableau de Bord Intuitif** : Visualisez les revenus totaux, le taux d'occupation, et le nombre de réservations en un coup d'œil.
+- **🔑 Gestion de la Flotte** : Ajoutez, modifiez ou désactivez des véhicules avec support de téléchargement d'images.
+- **📅 Suivi des Réservations** : Gérez les statuts des réservations (en attente, confirmée, terminée, annulée).
+- **👥 Gestion des Utilisateurs** : Contrôlez les accès et rôles (utilisateurs et administrateurs).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠️ Stack Technique
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Frontend :
+- **React 19** & **React Router Dom**
+- **Tailwind CSS** (Styling moderne et responsive)
+- **Framer Motion** (Animations fluides et premiums)
+- **React Hot Toast** (Notifications élégantes en temps réel)
+- **Lucide Icons** (Iconographie épurée)
+- **Axios** (Communication API fluide)
 
-### `npm run build`
+### Backend :
+- **Node.js** & **Express**
+- **MongoDB** & **Mongoose** (Base de données NoSQL)
+- **JSON Web Token (JWT)** & **BcryptJS** (Authentification et chiffrement sécurisés)
+- **Helmet** & **Express Rate Limit** (Sécurité avancée contre les attaques)
+- **Multer** & **Cloudinary** (Gestion optimisée des images)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚀 Installation Locale
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1. Prérequis :
+- **Node.js** installé (v16+)
+- Une base de données **MongoDB** (locale ou Atlas)
 
-### `npm run eject`
+### 2. Cloner le projet :
+```bash
+git clone https://github.com/mohammedbouaouin-1/location-voiture.git
+cd location-voiture
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Configurer et lancer le Backend :
+```bash
+cd backend
+# Créer un fichier .env et remplir les variables comme suit :
+# PORT=5000
+# MONGO_URI=votre_lien_mongodb
+# JWT_SECRET=votre_secret_jwt
+# STRIPE_SECRET_KEY=votre_cle_stripe
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+npm install
+npm run seed  # Peupler la base avec 20 voitures par défaut
+npm run dev   # Lancer le serveur de développement (port 5000)
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 4. Configurer et lancer le Frontend :
+```bash
+cd ..
+# Configurer le fichier .env à la racine :
+# REACT_APP_API_URL=http://localhost:5000
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+npm install
+npm start     # Lancer le site (http://localhost:3000)
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## ☁️ Déploiement en Production
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+La plateforme est entièrement configurée pour un déploiement cloud moderne :
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Backend** : Déployé sur **[Railway](https://railway.app)** avec support de Reverse Proxy et base de données MongoDB Atlas.
+- **Frontend** : Déployé sur **[Vercel](https://vercel.com)** avec routage Single Page Application et compatibilité complète des images mobiles.

@@ -17,7 +17,7 @@ export default function Cars() {
   const [filterGearbox, setFilterGearbox] = useState("all");
   const [sortBy, setSortBy] = useState("default");
   const [priceRange, setPriceRange] = useState(2000);
-  const [viewMode, setViewMode] = useState("grid"); // grid or list
+  const [viewMode, setViewMode] = useState("grid"); 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const [dateValue, setDateValue] = useState({
@@ -71,7 +71,7 @@ export default function Cars() {
       return 0;
     });
 
-  // Active filters for tags
+  
   const activeFilters = [];
   if (filterFuel !== "all") activeFilters.push({ key: 'fuel', label: filterFuel, clear: () => setFilterFuel("all") });
   if (filterGearbox !== "all") activeFilters.push({ key: 'gearbox', label: filterGearbox, clear: () => setFilterGearbox("all") });
@@ -100,7 +100,7 @@ export default function Cars() {
 
       <div className="max-w-7xl mx-auto px-6">
 
-        {/* ========== HEADER ========== */}
+        {}
         <div className="text-center mb-10">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -117,10 +117,10 @@ export default function Cars() {
           </p>
         </div>
 
-        {/* ========== SEARCH & DATE BAR ========== */}
+        {}
         <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/50 p-5 mb-6 border border-gray-100">
           <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search Input */}
+            {}
             <div className="flex-1 relative">
               <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={14} />
               <input
@@ -137,7 +137,7 @@ export default function Cars() {
               )}
             </div>
 
-            {/* Date Picker */}
+            {}
             <div className="lg:w-80 relative z-30">
               <div className="border border-gray-100 rounded-2xl overflow-hidden bg-[#F9FAFB] hover:border-[#C4A47C] transition-colors">
                 <Datepicker
@@ -152,7 +152,7 @@ export default function Cars() {
               </div>
             </div>
 
-            {/* Advanced Filters Button */}
+            {}
             <button
               onClick={() => setIsFilterOpen(true)}
               className="lg:w-auto px-6 py-4 bg-[#111827] text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-black hover:shadow-xl transition-all text-sm whitespace-nowrap"
@@ -166,9 +166,9 @@ export default function Cars() {
           </div>
         </div>
 
-        {/* ========== QUICK FILTER PILLS ========== */}
+        {}
         <div className="flex flex-wrap items-center gap-3 mb-6">
-          {/* Fuel pills */}
+          {}
           <div className="flex items-center gap-1.5 bg-white rounded-2xl p-1.5 border border-gray-100 shadow-sm">
             <FaGasPump className="text-gray-400 ml-3 mr-1" size={12} />
             {["all", "Essence", "Diesel"].map(fuel => (
@@ -186,7 +186,7 @@ export default function Cars() {
             ))}
           </div>
 
-          {/* Gearbox pills */}
+          {}
           <div className="flex items-center gap-1.5 bg-white rounded-2xl p-1.5 border border-gray-100 shadow-sm">
             <FaCog className="text-gray-400 ml-3 mr-1" size={12} />
             {["all", "Manuelle", "Automatique"].map(gear => (
@@ -204,7 +204,7 @@ export default function Cars() {
             ))}
           </div>
 
-          {/* Sort pills */}
+          {}
           <div className="flex items-center gap-1.5 bg-white rounded-2xl p-1.5 border border-gray-100 shadow-sm">
             {[
               { key: "default", label: "Défaut", icon: null },
@@ -226,7 +226,7 @@ export default function Cars() {
             ))}
           </div>
 
-          {/* View Toggle */}
+          {}
           <div className="flex items-center gap-1 bg-white rounded-2xl p-1.5 border border-gray-100 shadow-sm ml-auto">
             <button
               onClick={() => setViewMode("grid")}
@@ -243,7 +243,7 @@ export default function Cars() {
           </div>
         </div>
 
-        {/* ========== ACTIVE FILTER TAGS ========== */}
+        {}
         <AnimatePresence>
           {activeFilters.length > 0 && (
             <motion.div
@@ -276,7 +276,7 @@ export default function Cars() {
           )}
         </AnimatePresence>
 
-        {/* ========== RESULTS COUNT ========== */}
+        {}
         <div className="mb-6 flex items-center justify-between">
           <p className="text-sm font-bold text-[#111827]">
             <motion.span
@@ -291,7 +291,7 @@ export default function Cars() {
           </p>
         </div>
 
-        {/* ========== FILTER DRAWER (Price only now, main filters are inline) ========== */}
+        {}
         <AnimatePresence>
           {isFilterOpen && (
             <>
@@ -305,7 +305,7 @@ export default function Cars() {
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
                 className="fixed top-0 right-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl overflow-y-auto flex flex-col"
               >
-                {/* Drawer Header */}
+                {}
                 <div className="flex items-center justify-between p-8 pb-0">
                   <div>
                     <h3 className="text-xl font-black text-[#111827]">Filtres Avancés</h3>
@@ -317,7 +317,7 @@ export default function Cars() {
                 </div>
 
                 <div className="flex flex-col gap-8 p-8 flex-1">
-                  {/* Price Slider */}
+                  {}
                   <div>
                     <div className="flex justify-between mb-3">
                       <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#6B7280]">
@@ -340,7 +340,7 @@ export default function Cars() {
                     </div>
                   </div>
 
-                  {/* Fuel Selection */}
+                  {}
                   <div>
                     <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#6B7280] mb-3">
                       <FaGasPump size={10} /> Carburant
@@ -362,7 +362,7 @@ export default function Cars() {
                     </div>
                   </div>
 
-                  {/* Gearbox Selection */}
+                  {}
                   <div>
                     <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#6B7280] mb-3">
                       <FaCog size={10} /> Boîte de vitesse
@@ -384,7 +384,7 @@ export default function Cars() {
                     </div>
                   </div>
 
-                  {/* Sort */}
+                  {}
                   <div>
                     <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#6B7280] mb-3">
                       Trier par
@@ -411,7 +411,7 @@ export default function Cars() {
                     </div>
                   </div>
 
-                  {/* Bottom Actions */}
+                  {}
                   <div className="mt-auto pt-6 border-t border-gray-100 space-y-3">
                     {activeFilters.length > 0 && (
                       <button
@@ -434,7 +434,7 @@ export default function Cars() {
           )}
         </AnimatePresence>
 
-        {/* ========== CAR GRID / LIST ========== */}
+        {}
         <AnimatePresence mode="popLayout">
           {loading ? (
             <div className={viewMode === 'grid'
@@ -445,7 +445,7 @@ export default function Cars() {
             </div>
           ) : filteredCars.length > 0 ? (
             viewMode === 'grid' ? (
-              /* ===== GRID VIEW ===== */
+              
               <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {filteredCars.map((car, idx) => (
                   <motion.div
@@ -461,7 +461,7 @@ export default function Cars() {
                 ))}
               </motion.div>
             ) : (
-              /* ===== LIST VIEW ===== */
+              
               <div className="space-y-4">
                 {filteredCars.map((car, idx) => (
                   <motion.div
@@ -474,7 +474,7 @@ export default function Cars() {
                       to={`/cars/${car._id || car.id}`}
                       className="flex flex-col md:flex-row bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-gray-200 transition-all duration-300 overflow-hidden group"
                     >
-                      {/* Image */}
+                      {}
                       <div className="w-full md:w-64 h-48 md:h-auto bg-[#F9FAFB] shrink-0 overflow-hidden relative">
                         {car.image ? (
                           <img
@@ -487,7 +487,7 @@ export default function Cars() {
                             <FaCar size={40} />
                           </div>
                         )}
-                        {/* Status Badge */}
+                        {}
                         <div className="absolute top-4 left-4">
                           <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${
                             car.isAvailableNow !== false
@@ -499,7 +499,7 @@ export default function Cars() {
                         </div>
                       </div>
 
-                      {/* Content */}
+                      {}
                       <div className="flex-1 p-6 flex flex-col justify-between">
                         <div>
                           <div className="flex items-start justify-between mb-3">

@@ -5,7 +5,7 @@ import { FaCheckCircle, FaHome, FaList, FaCar, FaDownload } from 'react-icons/fa
 import { generateInvoicePDF } from '../utils/generatePDF';
 import { getCarById } from '../services/carService';
 
-// Lightweight canvas confetti
+
 function useConfetti() {
   const canvasRef = useRef(null);
 
@@ -52,7 +52,7 @@ function useConfetti() {
 
         p.x += p.vx;
         p.y += p.vy;
-        p.vy += 0.05; // gravity
+        p.vy += 0.05; 
         p.rotation += p.rotSpeed;
 
         if (p.y > canvas.height - 50) {
@@ -65,7 +65,7 @@ function useConfetti() {
       }
     };
 
-    // Start after a short delay for dramatic effect
+    
     const timeout = setTimeout(() => {
       animate();
     }, 400);
@@ -86,7 +86,7 @@ export default function BookingSuccess() {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    // Charger les infos de la voiture si disponible dans les params
+    
     const carId = searchParams.get('carId');
     if (carId) {
       getCarById(carId)
@@ -111,7 +111,7 @@ export default function BookingSuccess() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 py-20 bg-[#F9FAFB] relative overflow-hidden">
-      {/* Confetti canvas */}
+      {}
       <canvas
         ref={confettiRef}
         className="fixed inset-0 pointer-events-none z-50"

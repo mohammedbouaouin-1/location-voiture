@@ -23,13 +23,13 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
   const [showNotif, setShowNotif] = useState(false);
   const notifRef = useRef(null);
 
-  // Live clock
+  
   useEffect(() => {
     const t = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
 
-  // Close notif on outside click
+  
   useEffect(() => {
     const handleClick = (e) => {
       if (notifRef.current && !notifRef.current.contains(e.target)) {
@@ -58,7 +58,7 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
   return (
     <header className="sticky top-0 z-50 w-full px-8 py-5 bg-white/80 backdrop-blur-md border-b border-gray-100 flex items-center justify-between">
 
-      {/* Left: Menu + Date/Heure */}
+      {}
       <div className="flex items-center gap-6 flex-1">
         <button
           onClick={() => setIsOpen(true)}
@@ -67,7 +67,7 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
           <FaBars size={20} />
         </button>
 
-        {/* Date & Time - hidden on small screens */}
+        {}
         <div className="hidden lg:flex items-center gap-6">
           <div className="flex items-center gap-2 text-[#6B7280]">
             <FaCalendarDay className="text-[#C4A47C]" size={13} />
@@ -81,9 +81,9 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
         </div>
       </div>
 
-      {/* Right: Notif + Profile */}
+      {}
       <div className="flex items-center gap-4">
-        {/* Notification Bell */}
+        {}
         <div className="relative" ref={notifRef}>
           <button
             onClick={() => setShowNotif(v => !v)}
@@ -150,7 +150,7 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
 
         <div className="h-10 w-[1px] bg-gray-100 mx-2" />
 
-        {/* Profile */}
+        {}
         <div className="flex items-center gap-4 pl-2 cursor-pointer group">
           <div className="hidden text-right md:block">
             <p className="text-sm font-black uppercase tracking-tight text-[#111827]">{currentUser?.name || 'Administrateur'}</p>

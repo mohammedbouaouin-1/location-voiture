@@ -41,7 +41,7 @@ const seedDB = async () => {
     await Car.insertMany(cars);
     console.log(' 20 cars seeded successfully');
 
-    // Créer un admin par défaut s'il n'existe pas
+    
     const adminExists = await User.findOne({ email: 'admin@locafes.ma' });
     if (!adminExists) {
       await User.create({
