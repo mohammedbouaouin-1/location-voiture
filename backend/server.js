@@ -32,6 +32,8 @@ connectDB();
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 app.use(compression({
   level: 6,
   threshold: 1024, 
