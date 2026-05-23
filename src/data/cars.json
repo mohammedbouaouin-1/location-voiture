@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "name": "Dacia Logan",
+    "price": 300,
+    "image": "/images/Dacia Logan 2020.jpg",
+    "year": 2020,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 2,
+    "name": "Dacia Sandero",
+    "price": 250,
+    "image": "/images/dacia-sandero 2021.jpg",
+    "year": 2021,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 3,
+    "name": "Renault Clio 5",
+    "price": 250,
+    "image": "/images/renault-clio 5 2022.jpg",
+    "year": 2022,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 4,
+    "name": "Peugeot 208",
+    "price": 300,
+    "image": "/images/peugeot-208 2021.png",
+    "year": 2021,
+    "fuel": "Diesel",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 5,
+    "name": "Hyundai i10",
+    "price": 250,
+    "image": "/images/Hyundai i10 2020.jpg",
+    "year": 2020,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 6,
+    "name": "Kia Picanto",
+    "price": 300,
+    "image": "/images/Kia Picanto 2020.webp",
+    "year": 2020,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 7,
+    "name": "Citroën C3",
+    "price": 300,
+    "image": "/images/citroen-c3 2021.jpg",
+    "year": 2021,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 8,
+    "name": "Volkswagen Polo",
+    "price": 350,
+    "image": "/images/Volkswagen Polo 2022.webp",
+    "year": 2022,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 9,
+    "name": "Toyota Yaris",
+    "price": 350,
+    "image": "/images/Toyota Yaris 2022.png",
+    "year": 2022,
+    "fuel": "Hybride",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 10,
+    "name": "Fiat 500",
+    "price": 250,
+    "image": "/images/Fiat 500 2020.png",
+    "year": 2020,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 11,
+    "name": "Dacia Duster",
+    "price": 350,
+    "image": "/images/Dacia Duster 2021.webp",
+    "year": 2021,
+    "fuel": "Diesel",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 12,
+    "name": "Renault Captur",
+    "price": 400,
+    "image": "/images/renault-captur 2022.webp",
+    "year": 2022,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 13,
+    "name": "Peugeot 2008",
+    "price": 400,
+    "image": "/images/Peugeot 2008 2022.webp",
+    "year": 2022,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 14,
+    "name": "Hyundai Tucson",
+    "price": 450,
+    "image": "/images/Hyundai Tucson 2023.webp",
+    "year": 2023,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 15,
+    "name": "Nissan Qashqai",
+    "price": 400,
+    "image": "/images/Nissan Qashqai 2023.jpg",
+    "year": 2023,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 16,
+    "name": "Suzuki Swift",
+    "price": 400,
+    "image": "/images/Suzuki Swift 2020.jpg",
+    "year": 2020,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 17,
+    "name": "Seat Ibiza",
+    "price": 300,
+    "image": "/images/Seat Ibiza 2021.webp",
+    "year": 2021,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 18,
+    "name": "Renault Megane",
+    "price": 300,
+    "image": "/images/Renault Megane 2021.jpg",
+    "year": 2021,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  },
+  {
+    "id": 19,
+    "name": "Opel Corsa",
+    "price": 400,
+    "image": "/images/Opel Corsa 2020.png",
+    "year": 2020,
+    "fuel": "Essence",
+    "gearbox": "Manuelle"
+  },
+  {
+    "id": 20,
+    "name": "Skoda Octavia",
+    "price": 400,
+    "image": "/images/Skoda Octavia 2022.webp",
+    "year": 2022,
+    "fuel": "Diesel",
+    "gearbox": "Automatique"
+  }
+]
