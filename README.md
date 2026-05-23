@@ -1,87 +1,92 @@
-# 🚗 LocaFès — Plateforme Premium de Location de Voitures
+# LocaFès — Car Rental App
+A modern and feature-rich Car Rental web application built with React, Node.js, Express, and MongoDB, designed to provide a seamless booking experience across desktop and mobile platforms.
 
-Bienvenue sur **LocaFès**, une application web moderne et élégante conçue pour simplifier la location de voitures à Fès et ses environs. Développée avec une architecture MERN (MongoDB, Express, React, Node.js), elle offre une expérience utilisateur ultra-fluide, rapide et sécurisée sur tous les appareils.
+## Features
 
----
+### Authentication
+- Email & Password Authentication
+- Role-based Access Control (User & Admin)
+- Persistent User Sessions
 
-## ✨ Fonctionnalités Majeures
+### Car Browsing
+- Browse premium car fleet
+- Real-time search functionality
+- Detailed specifications (fuel type, gearbox, brand, price)
+- Real-time availability checks based on overlapping bookings
 
-### 💻 Pour les Clients :
-- **🚗 Exploration de la Flotte** : Parcourez un catalogue moderne avec des images haute définition et des fiches techniques détaillées.
-- **🔍 Filtres Avancés** : Filtrez les véhicules par type de carburant, boîte de vitesse, nom ou dates de disponibilité.
-- **📅 Réservations en Temps Réel** : Planifiez vos dates de location avec calcul automatique du prix total.
-- **💳 Paiement Sécurisé** : Intégration complète avec **Stripe** pour des transactions sécurisées par carte bancaire.
-- **📄 Facturation PDF** : Génération et téléchargement automatiques de factures PDF professionnelles après chaque réservation.
-- **📱 Entièrement Responsive** : Une interface soignée et fluide, optimisée pour smartphones, tablettes et ordinateurs.
+### Booking & Checkout
+- Interactive date-range picker with price calculation
+- Stripe Payment Gateway integration for secure checkout
+- Automatic PDF invoice generation and download upon successful booking
 
-### 🛡️ Pour l'Administration :
-- **📊 Tableau de Bord Intuitif** : Visualisez les revenus totaux, le taux d'occupation, et le nombre de réservations en un coup d'œil.
-- **🔑 Gestion de la Flotte** : Ajoutez, modifiez ou désactivez des véhicules avec support de téléchargement d'images.
-- **📅 Suivi des Réservations** : Gérez les statuts des réservations (en attente, confirmée, terminée, annulée).
-- **👥 Gestion des Utilisateurs** : Contrôlez les accès et rôles (utilisateurs et administrateurs).
+### Admin Dashboard
+- Overview statistics (total revenue, active bookings, total cars, user count)
+- Manage car fleet (add, edit, or soft-delete vehicles)
+- Track and update booking statuses (pending, confirmed, completed, cancelled)
+- Manage user accounts and roles
 
----
-
-## 🛠️ Stack Technique
-
-### Frontend :
-- **React 19** & **React Router Dom**
-- **Tailwind CSS** (Styling moderne et responsive)
-- **Framer Motion** (Animations fluides et premiums)
-- **React Hot Toast** (Notifications élégantes en temps réel)
-- **Lucide Icons** (Iconographie épurée)
-- **Axios** (Communication API fluide)
-
-### Backend :
-- **Node.js** & **Express**
-- **MongoDB** & **Mongoose** (Base de données NoSQL)
-- **JSON Web Token (JWT)** & **BcryptJS** (Authentification et chiffrement sécurisés)
-- **Helmet** & **Express Rate Limit** (Sécurité avancée contre les attaques)
-- **Multer** & **Cloudinary** (Gestion optimisée des images)
+### User Experience
+- Responsive design tailored for all screen sizes (Mobile, Tablet, Desktop)
+- Smooth animated transitions powered by Framer Motion
+- Instant feedback with React Hot Toast notifications
+- Clean and modern aesthetics
 
 ---
 
-## 🚀 Installation Locale
+## Tech Stack
+- **React** (Frontend library)
+- **Tailwind CSS** (Modern utility-first styling)
+- **Framer Motion** (Fluid UI animations)
+- **Node.js & Express** (Scalable backend API)
+- **MongoDB & Mongoose** (NoSQL database & object modeling)
+- **Stripe** (Secure payment processing)
+- **jsPDF & jsPDF AutoTable** (Invoice generation)
 
-### 1. Prérequis :
-- **Node.js** installé (v16+)
-- Une base de données **MongoDB** (locale ou Atlas)
+---
 
-### 2. Cloner le projet :
+## Architecture
+The application follows a MERN stack architecture, utilizing a RESTful API with an MVC (Model-View-Controller) structure on the backend.
+
+---
+
+## Project Statistics
+- 10+ Screens / Views
+- 30+ JS/JSX Files
+- Cross-platform (Mobile & Desktop)
+- Clean and Maintainable Codebase
+
+---
+
+## Installation
+
+### Clone the repository:
 ```bash
 git clone https://github.com/mohammedbouaouin-1/location-voiture.git
 cd location-voiture
 ```
 
-### 3. Configurer et lancer le Backend :
+### Install & Run Backend:
 ```bash
 cd backend
-# Créer un fichier .env et remplir les variables comme suit :
-# PORT=5000
-# MONGO_URI=votre_lien_mongodb
-# JWT_SECRET=votre_secret_jwt
-# STRIPE_SECRET_KEY=votre_cle_stripe
-
+# Create a .env file and fill in required variables (MONGO_URI, JWT_SECRET, STRIPE_SECRET_KEY, PORT)
 npm install
-npm run seed  # Peupler la base avec 20 voitures par défaut
-npm run dev   # Lancer le serveur de développement (port 5000)
+npm run seed  # Seed the database with 20 default cars
+npm run dev   # Start development server
 ```
 
-### 4. Configurer et lancer le Frontend :
+### Install & Run Frontend:
 ```bash
 cd ..
-# Configurer le fichier .env à la racine :
-# REACT_APP_API_URL=http://localhost:5000
-
+# Configure .env file at root (REACT_APP_API_URL)
 npm install
-npm start     # Lancer le site (http://localhost:3000)
+npm start     # Start React development server
 ```
 
 ---
 
-## ☁️ Déploiement en Production
+## Author
+**Mohammed Bouaouin**
 
-La plateforme est entièrement configurée pour un déploiement cloud moderne :
+LinkedIn: [https://www.linkedin.com/in/mohammed-bouaouin-8a9720360](https://www.linkedin.com/in/mohammed-bouaouin-8a9720360)
 
-- **Backend** : Déployé sur **[Railway](https://railway.app)** avec support de Reverse Proxy et base de données MongoDB Atlas.
-- **Frontend** : Déployé sur **[Vercel](https://vercel.com)** avec routage Single Page Application et compatibilité complète des images mobiles.
+GitHub: [https://github.com/mohammedbouaouin-1](https://github.com/mohammedbouaouin-1)
