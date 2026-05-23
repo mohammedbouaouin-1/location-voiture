@@ -73,8 +73,9 @@ app.use(cors({
     
     const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
     const isLocal = normalizedOrigin.startsWith('http://localhost') || normalizedOrigin.startsWith('http://127.0.0.1');
+    const isVercel = normalizedOrigin.endsWith('.vercel.app');
 
-    if (isLocal || allowedOrigins.includes(normalizedOrigin)) {
+    if (isLocal || isVercel || allowedOrigins.includes(normalizedOrigin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
