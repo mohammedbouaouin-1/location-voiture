@@ -11,16 +11,20 @@ const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 export const resolveImageUrl = (imagePath) => {
   if (!imagePath) return '/placeholder-car.jpg';
   
-  // Déjà une URL complète (http/https)
-  if (imagePath.startsWith('http')) return imagePath;
+  let resolvedPath = imagePath;
   
   // Image uploadée via admin → servie par le backend Express
   if (imagePath.startsWith('/uploads/')) {
-    return `${BACKEND_URL}${imagePath}`;
+    resolvedPath = `${BACKEND_URL}${imagePath}`;
   }
   
-  // Image statique dans public/ de React (/images/...)
-  return imagePath;
+  // Déjà une URL complète (http/https)
+  else if (imagePath.startsWith('http')) {
+    resolvedPath = imagePath;
+  }
+  
+  // Encoder les espaces pour assurer la compatibilité mobile (Safari/Chrome iOS)
+  return encodeURI(resolvedPath);
 };
 
 export default resolveImageUrl;
