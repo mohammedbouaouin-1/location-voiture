@@ -132,9 +132,9 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium">
           <p>© {currentYear} LocaFès. Tous droits réservés.</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-[#C4A47C] transition-colors">Confidentialité</a>
-            <a href="#" className="hover:text-[#C4A47C] transition-colors">Conditions</a>
-            <a href="#" className="hover:text-[#C4A47C] transition-colors">Mentions</a>
+            <button type="button" className="hover:text-[#C4A47C] transition-colors focus:outline-none">Confidentialité</button>
+            <button type="button" className="hover:text-[#C4A47C] transition-colors focus:outline-none">Conditions</button>
+            <button type="button" className="hover:text-[#C4A47C] transition-colors focus:outline-none">Mentions</button>
           </div>
         </div>
       </div>

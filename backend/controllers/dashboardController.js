@@ -5,8 +5,8 @@ const Booking = require('../models/Booking');
 
 const getStats = async (req, res) => {
   try {
-    const totalUsers = await User.countDocuments();
-    const totalCars = await Car.countDocuments();
+    const totalUsers = await User.countDocuments({ deletedAt: null });
+    const totalCars = await Car.countDocuments({ deletedAt: null });
     const totalBookings = await Booking.countDocuments();
 
     
@@ -28,7 +28,9 @@ const getStats = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(5);
 
-    const recentUsers = await User.find({})
+    const recentUsers = await User.find({ deletedAt: null })
+      .sort({ createdAt: -1 })
+      .limit(5);
   
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -51,8 +53,8 @@ const getStats = async (req, res) => {
     };
 
     const growth = {
-      users: await calcGrowth(User, {}),
-      cars: await calcGrowth(Car, {}),
+      users: await calcGrowth(User, { deletedAt: null }),
+      cars: await calcGrowth(Car, { deletedAt: null }),
       bookings: await calcGrowth(Booking, { status: { $ne: 'cancelled' } }),
       revenue: await calcGrowth(Booking, { status: { $ne: 'cancelled' } }, 'totalPrice')
     };

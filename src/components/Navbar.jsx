@@ -20,6 +20,26 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setMenuOpen(false);
+    };
+    if (menuOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
     logout();
     navigate('/');
@@ -73,7 +93,7 @@ export default function Navbar() {
               }`}
             >
               {link.label}
-              <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#111827] transition-all ${
+              <span className={`absolute -bottom-1 left-0 h-0.5 bg-[#C4A47C] transition-all ${
                 isActive(link.path) ? 'w-full' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
@@ -133,6 +153,8 @@ export default function Navbar() {
         {}
         <button 
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-expanded={menuOpen}
+          aria-label='Menu de navigation'
           className={`md:hidden p-2 rounded-lg transition-colors ${
             isTransparent ? 'hover:bg-white/10' : 'hover:bg-gray-100'
           }`}
@@ -145,8 +167,7 @@ export default function Navbar() {
       </div>
 
       {}
-      {menuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t animate-slide-down">
+      <div className={`md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t transition-all duration-300 ease-out ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`}>
           <div className="p-6 space-y-4">
             {navLinks.map(link => (
               <Link 
@@ -198,7 +219,6 @@ export default function Navbar() {
             )}
           </div>
         </div>
-      )}
     </nav>
   );
 }

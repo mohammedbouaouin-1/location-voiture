@@ -7,6 +7,15 @@ export function useAuth() {
     return useContext(AuthContext);
 }
 
+const isTokenExpired = (token) => {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.exp * 1000 < Date.now();
+  } catch {
+    return true;
+  }
+};
+
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -22,6 +31,12 @@ export function AuthProvider({ children }) {
         } catch (error) {
             console.error("Failed to parse user from localStorage:", error);
             localStorage.removeItem('user');
+        }
+        if (token && isTokenExpired(token)) {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            setLoading(false);
+            return;
         }
         if (token && user) {
             setCurrentUser(user);
@@ -61,6 +76,7 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        loading,
         login,
         register,
         logout,

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FaSearch, FaTrash, FaEdit, FaDownload } from 'react-icons/fa';
 
 const STATUS_ROLE_LABELS = { admin: 'Administrateur', user: 'Utilisateur' };
@@ -33,10 +34,14 @@ export default function UsersTab({
   totalPages,
   handlePageChange
 }) {
-  const filtered = users.filter(u =>
-    u.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    u.email?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [filterRole, setFilterRole] = useState('all');
+
+  const filtered = users.filter(u => {
+    const matchesSearch = u.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      u.email?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesRole = filterRole === 'all' || u.role === filterRole;
+    return matchesSearch && matchesRole;
+  });
 
   return (
     <div className="space-y-12 text-left">
@@ -71,6 +76,27 @@ export default function UsersTab({
             />
           </div>
         </div>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap items-center gap-2 bg-[#F9FAFB] p-1.5 rounded-2xl border border-gray-100 self-start">
+        {[
+          { key: 'all', label: 'Tous' },
+          { key: 'user', label: 'Clients' },
+          { key: 'admin', label: 'Administrateurs' },
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setFilterRole(tab.key)}
+            className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+              filterRole === tab.key
+                ? 'bg-[#111827] text-white shadow-lg shadow-black/10'
+                : 'text-[#6B7280] hover:text-[#111827]'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       <div className="bg-white rounded-[48px] overflow-hidden shadow-xl shadow-gray-200/50 border border-white">

@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const WHATSAPP_NUMBER = '212668898245';
-const WHATSAPP_MESSAGE = encodeURIComponent('Bonjour LocaFès ! Je souhaite avoir des informations sur la location de voitures.');
 
 export default function WhatsAppButton() {
+  const location = useLocation();
   const [visible, setVisible] = useState(false);
   const [tooltip, setTooltip] = useState(false);
   const [pulse, setPulse] = useState(true);
+
+  const getMessage = () => {
+    if (location.pathname.startsWith('/cars/')) {
+      return 'Bonjour, je suis intéressé par un véhicule sur votre site LocaFès. Pouvez-vous me donner plus d\'informations ?';
+    }
+    return 'Bonjour, je souhaite des informations sur la location de voiture chez LocaFès.';
+  };
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 200);
@@ -16,7 +24,7 @@ export default function WhatsAppButton() {
     return () => { window.removeEventListener('scroll', onScroll); clearTimeout(t); };
   }, []);
 
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(getMessage())}`;
 
   return (
     <div className={`fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 transition-all duration-500 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>

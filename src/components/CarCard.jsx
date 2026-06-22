@@ -27,6 +27,7 @@ export default function CarCard({ car }) {
             <img 
               src={resolveImageUrl(car.image)}
               alt={car.name} 
+              loading="lazy"
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
               onError={(e) => {
                 e.target.onerror = null; 
@@ -71,6 +72,13 @@ export default function CarCard({ car }) {
             <p className="text-[#6B7280] text-[11px] font-bold uppercase tracking-widest mt-1">
               {car.brand || 'Luxury Edition'}
             </p>
+            {car.rating > 0 && (
+              <div className="flex items-center gap-1 text-xs text-[#C4A47C]">
+                <span>★</span>
+                <span className="font-bold">{car.rating.toFixed(1)}</span>
+                <span className="text-gray-400">({car.numReviews})</span>
+              </div>
+            )}
           </div>
 
           {}

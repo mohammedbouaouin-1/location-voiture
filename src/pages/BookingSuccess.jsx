@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import { FaCheckCircle, FaHome, FaList, FaCar, FaDownload } from 'react-icons/fa';
@@ -15,6 +16,12 @@ function useConfetti() {
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', handleResize);
 
     const colors = ['#C4A47C', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#06b6d4'];
     const pieces = [];
@@ -73,6 +80,7 @@ function useConfetti() {
     return () => {
       clearTimeout(timeout);
       cancelAnimationFrame(frame);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -110,6 +118,8 @@ export default function BookingSuccess() {
   };
 
   return (
+    <>
+    <Helmet><title>Réservation Confirmée | LocaFès</title></Helmet>
     <div className="min-h-screen flex items-center justify-center px-6 py-20 bg-[#F9FAFB] relative overflow-hidden">
       {}
       <canvas
@@ -161,5 +171,6 @@ export default function BookingSuccess() {
         </div>
       </motion.div>
     </div>
+    </>
   );
 }

@@ -15,10 +15,12 @@ const bookingSchema = mongoose.Schema(
     fullName: {
       type: String,
       required: [true, 'Le nom complet est requis'],
+      maxlength: [100, 'Le nom complet ne peut pas dépasser 100 caractères'],
     },
     phone: {
       type: String,
       required: [true, 'Le téléphone est requis'],
+      maxlength: [20, 'Le numéro de téléphone ne peut pas dépasser 20 caractères'],
     },
     startDate: {
       type: Date,

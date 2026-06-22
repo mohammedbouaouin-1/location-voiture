@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AnimatePresence, motion } from 'framer-motion';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
@@ -60,7 +60,6 @@ const pageTransition = {
 };
 
 function AnimatedRoutes() {
-  const { isAdmin } = useAuth();
   const location = useLocation();
 
   return (

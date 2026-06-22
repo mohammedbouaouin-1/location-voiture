@@ -10,7 +10,7 @@ const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./utils/errorHandler');
 
 
-const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'STRIPE_SECRET_KEY'];
+const requiredEnvVars = ['MONGO_URI', 'JWT_SECRET', 'STRIPE_SECRET_KEY', 'STRIPE_WEBHOOK_SECRET'];
 requiredEnvVars.forEach(key => {
   if (!process.env[key]) {
     console.error(` CRITICAL: Missing environment variable: ${key}`);
@@ -64,7 +64,7 @@ const authLimiter = rateLimit({
 
 const allowedOrigins = ['http://localhost:3000', 'https://location-voiture.vercel.app'];
 if (process.env.CLIENT_URL) {
-  allowedOrigins.push(...process.env.CLIENT_URL.split(','));
+  allowedOrigins.push(...process.env.CLIENT_URL.split(',').map(u => u.trim()));
 }
 
 app.use(cors({
@@ -72,10 +72,8 @@ app.use(cors({
     if (!origin) return callback(null, true);
     
     const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
-    const isLocal = normalizedOrigin.startsWith('http://localhost') || normalizedOrigin.startsWith('http://127.0.0.1');
-    const isVercel = normalizedOrigin.endsWith('.vercel.app');
 
-    if (isLocal || isVercel || allowedOrigins.includes(normalizedOrigin)) {
+    if (allowedOrigins.includes(normalizedOrigin)) {
       callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
@@ -87,7 +85,7 @@ app.use(cors({
 const { handleStripeWebhook } = require('./controllers/stripeController');
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 
-app.use(express.json());
+app.use(express.json({ limit: '10kb' }));
 
 
 const staticCacheOptions = {

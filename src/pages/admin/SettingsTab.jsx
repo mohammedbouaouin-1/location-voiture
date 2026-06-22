@@ -2,7 +2,27 @@ import { useState } from 'react';
 import { FaSave, FaBuilding, FaPhone, FaMapMarkerAlt, FaEnvelope, FaGlobe, FaMoon, FaSun, FaDownload, FaKey } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 
-export default function SettingsTab() {
+const STATUS_LABELS = {
+  pending: 'En attente',
+  confirmed: 'Confirmé',
+  cancelled: 'Annulé',
+  completed: 'Terminé',
+};
+
+const STATUS_ROLE_LABELS = { admin: 'Administrateur', user: 'Utilisateur' };
+
+function downloadCSV(headers, rows, filename) {
+  const csvContent = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+export default function SettingsTab({ bookings = [], users = [], cars = [] }) {
   const [agency, setAgency] = useState({
     name: 'LocaFès',
     phone: '+212 5XX-XXXXXX',
@@ -16,6 +36,60 @@ export default function SettingsTab() {
   const handleSave = (e) => {
     e.preventDefault();
     toast.success('Paramètres enregistrés avec succès !');
+  };
+
+  const handleExport = (key) => {
+    if (key === 'bookings') {
+      if (!bookings || bookings.length === 0) {
+        toast.error('Aucune réservation à exporter');
+        return;
+      }
+      const headers = ['Conducteur', 'Téléphone', 'Véhicule', 'Début', 'Fin', 'Montant (DH)', 'Statut', 'Paiement'];
+      const rows = bookings.map(b => [
+        b.fullName || '',
+        b.phone || '',
+        b.car?.name || '',
+        b.startDate ? new Date(b.startDate).toLocaleDateString('fr-FR') : '',
+        b.endDate ? new Date(b.endDate).toLocaleDateString('fr-FR') : '',
+        b.totalPrice || '',
+        STATUS_LABELS[b.status] || b.status || '',
+        b.paymentMethod === 'card' ? 'Carte' : 'Espèces',
+      ]);
+      downloadCSV(headers, rows, `reservations_locafes_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.csv`);
+      toast.success('Réservations exportées avec succès !');
+    } else if (key === 'users') {
+      if (!users || users.length === 0) {
+        toast.error('Aucun client à exporter');
+        return;
+      }
+      const headers = ['Nom', 'Email', 'Téléphone', 'Rôle', "Date d'inscription"];
+      const rows = users.map(u => [
+        u.name || '',
+        u.email || '',
+        u.phone || '',
+        STATUS_ROLE_LABELS[u.role] || u.role || '',
+        u.createdAt ? new Date(u.createdAt).toLocaleDateString('fr-FR') : '',
+      ]);
+      downloadCSV(headers, rows, `clients_locafes_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.csv`);
+      toast.success('Clients exportés avec succès !');
+    } else if (key === 'cars') {
+      if (!cars || cars.length === 0) {
+        toast.error('Aucune voiture à exporter');
+        return;
+      }
+      const headers = ['Nom', 'Marque', 'Année', 'Carburant', 'Boîte', 'Prix (DH/J)', 'Disponible'];
+      const rows = cars.map(c => [
+        c.name || '',
+        c.brand || '',
+        c.year || '',
+        c.fuel || '',
+        c.gearbox || '',
+        c.price || '',
+        c.available ? 'Oui' : 'Non',
+      ]);
+      downloadCSV(headers, rows, `parc_auto_locafes_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.csv`);
+      toast.success('Parc automobile exporté avec succès !');
+    }
   };
 
   return (
@@ -128,14 +202,14 @@ export default function SettingsTab() {
             </div>
             <div className="space-y-4">
               {[
-                { label: 'Exporter les Réservations', color: 'blue', key: 'bookings' },
-                { label: 'Exporter les Clients', color: 'emerald', key: 'users' },
-                { label: 'Exporter le Parc Auto', color: 'amber', key: 'cars' },
-              ].map(({ label, color, key }) => (
+                { label: 'Exporter les Réservations', style: 'border-[#E8DDD0] bg-[#F8F5F0] text-[#C4A47C] hover:bg-[#F0EBE3]', key: 'bookings' },
+                { label: 'Exporter les Clients', style: 'border-emerald-100 bg-emerald-50 text-emerald-700 hover:bg-emerald-100', key: 'users' },
+                { label: 'Exporter le Parc Auto', style: 'border-amber-100 bg-amber-50 text-amber-700 hover:bg-amber-100', key: 'cars' },
+              ].map(({ label, style, key }) => (
                 <button
                   key={key}
-                  onClick={() => toast.success(`Export ${label} lancé !`)}
-                  className={`w-full py-4 px-6 rounded-2xl border-2 border-${color}-100 bg-${color}-50 text-${color}-700 font-black uppercase tracking-widest text-[10px] hover:shadow-lg transition-all flex items-center justify-between`}
+                  onClick={() => handleExport(key)}
+                  className={`w-full py-4 px-6 rounded-2xl border-2 font-black uppercase tracking-widest text-[10px] hover:shadow-lg transition-all flex items-center justify-between ${style}`}
                 >
                   <span>{label}</span>
                   <FaDownload />

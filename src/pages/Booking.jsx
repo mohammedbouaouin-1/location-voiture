@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
+import { resolveImageUrl } from "../utils/imageUrl";
 import { differenceInDays } from 'date-fns';
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from '../contexts/AuthContext';
 import { getCarById } from "../services/carService";
 import { createBooking, createPaymentIntent } from "../services/bookingService";
-import { FaCalendarAlt, FaCreditCard, FaMoneyBillWave, FaUser, FaCheckCircle, FaCar, FaPhone, FaArrowLeft, FaInfoCircle, FaArrowRight } from 'react-icons/fa';
+import { FaCalendarAlt, FaCreditCard, FaMoneyBillWave, FaUser, FaCar, FaPhone, FaArrowLeft, FaInfoCircle, FaArrowRight } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
@@ -437,7 +438,7 @@ export default function Booking() {
               <h3 className="text-sm font-extrabold text-[#111827] uppercase tracking-[0.2em] mb-8 border-b border-gray-50 pb-4">Récapitulatif</h3>
 
               <div className="relative h-40 rounded-2xl overflow-hidden mb-6 bg-[#F9FAFB]">
-                <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
+                <img src={resolveImageUrl(car.image)} alt={car.name} className="w-full h-full object-cover" />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#111827] to-transparent h-20 opacity-40"></div>
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <p className="text-[10px] font-bold uppercase tracking-widest opacity-80 mb-0.5">{car.brand || 'Class Lux'}</p>
@@ -503,7 +504,7 @@ export default function Booking() {
                      <p className="text-[10px] font-black uppercase tracking-widest text-[#C4A47C] mb-1">{car.brand || 'Premium'}</p>
                      <h4 className="font-bold text-sm text-[#111827]">{car.name}</h4>
                    </div>
-                   <img src={car.image} alt={car.name} className="w-20 h-12 object-cover rounded-lg shadow-sm" />
+                   <img src={resolveImageUrl(car.image)} alt={car.name} className="w-20 h-12 object-cover rounded-lg shadow-sm" />
                 </div>
                 
                 {}
@@ -537,7 +538,7 @@ export default function Booking() {
                   </div>
                   {stripePromise && clientSecret ? (
                     <Elements stripe={stripePromise} options={{ clientSecret }}>
-                      <StripePaymentForm onPaymentSuccess={onStripeSuccess} />
+                      <StripePaymentForm totalPrice={total} onPaymentSuccess={onStripeSuccess} />
                     </Elements>
                   ) : (
                     <div className="text-center py-8">

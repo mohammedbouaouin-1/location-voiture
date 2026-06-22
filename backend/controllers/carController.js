@@ -10,7 +10,10 @@ const getCars = async (req, res) => {
 
     if (fuel && fuel !== 'all') query.fuel = fuel;
     if (gearbox && gearbox !== 'all') query.gearbox = gearbox;
-    if (search) query.name = { $regex: search, $options: 'i' };
+    if (search) {
+      const safeSearch = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+      query.name = { $regex: safeSearch, $options: 'i' };
+    }
 
     if (startDate && endDate) {
       const start = new Date(startDate);
@@ -34,7 +37,7 @@ const getCars = async (req, res) => {
     if (sort === 'year') sortOption = { year: -1 };
 
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 50;
+    const limit = Math.min(Number(req.query.limit) || 50, 100);
     const skip = (page - 1) * limit;
 
     const totalCars = await Car.countDocuments(query);
@@ -97,9 +100,20 @@ const getCarById = async (req, res) => {
 };
 
 
+const whitelistedKeys = ['name', 'brand', 'price', 'year', 'fuel', 'gearbox', 'available', 'description'];
+const extractWhitelistedCarData = (body) => {
+  const data = {};
+  whitelistedKeys.forEach(k => {
+    if (body[k] !== undefined) {
+      data[k] = body[k];
+    }
+  });
+  return data;
+};
+
 const createCar = async (req, res) => {
   try {
-    const carData = { ...req.body };
+    const carData = extractWhitelistedCarData(req.body);
     if (req.file) {
       carData.image = `/uploads/${req.file.filename}`;
     }
@@ -117,7 +131,7 @@ const createCar = async (req, res) => {
 
 const updateCar = async (req, res) => {
   try {
-    const carData = { ...req.body };
+    const carData = extractWhitelistedCarData(req.body);
     if (req.file) {
       carData.image = `/uploads/${req.file.filename}`;
     }
@@ -157,6 +171,15 @@ const deleteCar = async (req, res) => {
 const createCarReview = async (req, res) => {
   try {
     const { rating, comment } = req.body;
+    
+    const ratingNum = Number(rating);
+    if (isNaN(ratingNum) || ratingNum < 1 || ratingNum > 5) {
+      return res.status(400).json({ message: "La note doit être un nombre entre 1 et 5" });
+    }
+    if (!comment || typeof comment !== 'string' || !comment.trim()) {
+      return res.status(400).json({ message: "Le commentaire ne peut pas être vide" });
+    }
+
     const car = await Car.findById(req.params.id);
 
     if (car) {

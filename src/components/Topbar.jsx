@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FaBell, FaBars, FaChevronDown, FaUserShield, FaClock, FaCalendarDay, FaBookmark } from 'react-icons/fa';
 import { useAuth } from '../contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate } from 'react-router-dom';
 
 const STATUS_LABELS = {
   pending: 'En attente',
@@ -18,10 +19,13 @@ const STATUS_STYLES = {
 };
 
 export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings = [] }) {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
   const [time, setTime] = useState(new Date());
   const [showNotif, setShowNotif] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const notifRef = useRef(null);
+  const profileMenuRef = useRef(null);
 
   
   useEffect(() => {
@@ -35,10 +39,30 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
       if (notifRef.current && !notifRef.current.contains(e.target)) {
         setShowNotif(false);
       }
+      if (profileMenuRef.current && !profileMenuRef.current.contains(e.target)) {
+        setShowProfileMenu(false);
+      }
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  const formatNotifTime = (dateStr) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    const diffMs = Date.now() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    if (diffMins < 1) return "À l'instant";
+    if (diffMins < 60) return `Il y a ${diffMins} min`;
+    const diffHours = Math.floor(diffMins / 60);
+    if (diffHours < 24) return `Il y a ${diffHours} h`;
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
+  };
 
   const pendingCount = pendingBookings.length;
 
@@ -87,6 +111,8 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
         <div className="relative" ref={notifRef}>
           <button
             onClick={() => setShowNotif(v => !v)}
+            aria-haspopup="menu"
+            aria-expanded={showNotif}
             className="relative p-3 bg-[#F9FAFB] border border-gray-100 rounded-2xl text-[#6B7280] hover:text-[#C4A47C] transition-all group"
           >
             <FaBell size={20} className="group-hover:rotate-12 transition-transform" />
@@ -134,6 +160,9 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
                           <div className="flex-1 min-w-0">
                             <p className="text-xs font-black uppercase tracking-tight text-[#111827] truncate">{b.fullName}</p>
                             <p className="text-[10px] font-bold text-[#6B7280] truncate">{b.car?.name} — {b.totalPrice} DH</p>
+                            {b.createdAt && (
+                              <p className="text-[8px] text-gray-400 mt-0.5">{formatNotifTime(b.createdAt)}</p>
+                            )}
                           </div>
                           <span className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest border ${STATUS_STYLES[b.status]}`}>
                             {STATUS_LABELS[b.status]}
@@ -151,17 +180,55 @@ export default function Topbar({ setIsOpen, pendingBookings = [], recentBookings
         <div className="h-10 w-[1px] bg-gray-100 mx-2" />
 
         {}
-        <div className="flex items-center gap-4 pl-2 cursor-pointer group">
-          <div className="hidden text-right md:block">
-            <p className="text-sm font-black uppercase tracking-tight text-[#111827]">{currentUser?.name || 'Administrateur'}</p>
-            <p className="text-[9px] font-black text-[#C4A47C] uppercase tracking-[0.2em]">{currentUser?.role || 'Manager'}</p>
-          </div>
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#111827] to-[#1d4ed8] p-[1px] shadow-lg shadow-black/10 hover:scale-105 transition-all">
-            <div className="w-full h-full bg-white rounded-[15px] flex items-center justify-center font-black text-[#C4A47C]">
-              {currentUser?.name?.charAt(0) || <FaUserShield />}
+        {/* Profile */}
+        <div className="relative" ref={profileMenuRef}>
+          <div 
+            onClick={() => setShowProfileMenu(v => !v)}
+            className="flex items-center gap-4 pl-2 cursor-pointer group"
+          >
+            <div className="hidden text-right md:block">
+              <p className="text-sm font-black uppercase tracking-tight text-[#111827]">{currentUser?.name || 'Administrateur'}</p>
+              <p className="text-[9px] font-black text-[#C4A47C] uppercase tracking-[0.2em]">{currentUser?.role || 'Manager'}</p>
             </div>
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#111827] to-[#1d4ed8] p-[1px] shadow-lg shadow-black/10 hover:scale-105 transition-all">
+              <div className="w-full h-full bg-white rounded-[15px] flex items-center justify-center font-black text-[#C4A47C]">
+                {currentUser?.name?.charAt(0) || <FaUserShield />}
+              </div>
+            </div>
+            <FaChevronDown className={`text-[#6B7280] group-hover:text-[#C4A47C] transition-transform text-xs ${showProfileMenu ? 'rotate-180' : ''}`} />
           </div>
-          <FaChevronDown className="text-[#6B7280] group-hover:text-[#C4A47C] transition-colors text-xs" />
+
+          <AnimatePresence>
+            {showProfileMenu && (
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="absolute right-0 top-14 w-48 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-[200] py-2"
+              >
+                <Link
+                  to="/"
+                  className="block px-5 py-3 text-xs font-bold text-[#6B7280] hover:text-[#111827] hover:bg-[#F9FAFB] transition-colors"
+                >
+                  Retour au site
+                </Link>
+                <Link
+                  to="/profile"
+                  className="block px-5 py-3 text-xs font-bold text-[#6B7280] hover:text-[#111827] hover:bg-[#F9FAFB] transition-colors"
+                >
+                  Mon profil
+                </Link>
+                <div className="h-[1px] bg-gray-100 my-1" />
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left block px-5 py-3 text-xs font-bold text-rose-500 hover:bg-rose-50 transition-colors"
+                >
+                  Déconnexion
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </header>

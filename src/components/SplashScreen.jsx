@@ -3,15 +3,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaCar } from 'react-icons/fa';
 
 export default function SplashScreen({ onComplete }) {
+  const [alreadySeen] = useState(() => sessionStorage.getItem('splashSeen') === 'true');
   const [show, setShow] = useState(true);
 
   useEffect(() => {
+    if (alreadySeen) {
+      onComplete();
+    }
+  }, [alreadySeen, onComplete]);
+
+  useEffect(() => {
+    if (alreadySeen) return;
     const timer = setTimeout(() => {
       setShow(false);
+      sessionStorage.setItem('splashSeen', 'true');
       setTimeout(onComplete, 600); 
     }, 2200);
     return () => clearTimeout(timer);
-  }, [onComplete]);
+  }, [alreadySeen, onComplete]);
+
+  if (alreadySeen) return null;
 
   return (
     <AnimatePresence>

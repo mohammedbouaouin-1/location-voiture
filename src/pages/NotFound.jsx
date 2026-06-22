@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { FaHome, FaSearch } from 'react-icons/fa';
 
 export default function NotFound() {
   return (
+    <>
+    <Helmet><title>Page non trouvée | LocaFès</title></Helmet>
     <div className="min-h-screen flex items-center justify-center px-6 bg-[#F9FAFB] relative overflow-hidden">
       {}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#F0EBE3]/50 rounded-full blur-[150px] pointer-events-none" />
@@ -64,5 +67,6 @@ export default function NotFound() {
         </motion.div>
       </div>
     </div>
+    </>
   );
 }

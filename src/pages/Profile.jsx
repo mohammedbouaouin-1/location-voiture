@@ -48,11 +48,13 @@ export default function Profile() {
     }
   };
 
+  const confirmedBookingsCount = bookings.filter(b => b.status === 'confirmed' || b.status === 'completed').length;
+
   const totalSpent = bookings
     .filter(b => b.status === 'confirmed' || b.status === 'completed')
     .reduce((sum, b) => sum + (b.totalPrice || 0), 0);
 
-  const tier = getLoyaltyTier(bookings.length);
+  const tier = getLoyaltyTier(confirmedBookingsCount);
 
   const filteredBookings = filterStatus === 'all'
     ? bookings
@@ -77,6 +79,28 @@ export default function Profile() {
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     setUpdating(true);
+
+    if (!editFormData.name.trim()) {
+      toast.error("Le nom est requis");
+      setUpdating(false);
+      return;
+    }
+    if (!editFormData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(editFormData.email)) {
+      toast.error("Veuillez fournir un email valide");
+      setUpdating(false);
+      return;
+    }
+    if (editFormData.phone && !/^\+?[0-9\s-]{8,20}$/.test(editFormData.phone)) {
+      toast.error("Veuillez fournir un numéro de téléphone valide");
+      setUpdating(false);
+      return;
+    }
+    if (editFormData.password && editFormData.password.length < 6) {
+      toast.error("Le mot de passe doit comporter au moins 6 caractères");
+      setUpdating(false);
+      return;
+    }
+
     try {
       const data = { ...editFormData };
       if (!data.password) delete data.password;
@@ -163,7 +187,7 @@ export default function Profile() {
                 <div className="mt-6 max-w-sm mx-auto md:mx-0">
                   <div className="flex justify-between items-center mb-1.5">
                     <span className="text-[10px] text-[#9CA3AF] font-bold uppercase tracking-widest">Progression vers {tier.next}</span>
-                    <span className="text-[10px] text-[#111827] font-black">{bookings.length}/{tier.target} locations</span>
+                    <span className="text-[10px] text-[#111827] font-black">{confirmedBookingsCount}/{tier.target} locations</span>
                   </div>
                   <div className="h-2 bg-white rounded-full overflow-hidden border border-gray-100 shadow-inner">
                     <motion.div 
@@ -180,7 +204,7 @@ export default function Profile() {
             {}
             <div className="flex gap-4 w-full md:w-auto shrink-0 mt-6 md:mt-0">
               <div className="flex-1 md:flex-none text-center p-5 rounded-[24px] bg-white border border-gray-100 shadow-sm shadow-gray-100 min-w-[100px]">
-                <p className="text-3xl font-black text-[#111827]">{bookings.length}</p>
+                <p className="text-3xl font-black text-[#111827]">{confirmedBookingsCount}</p>
                 <p className="text-[9px] font-black text-[#6B7280] uppercase tracking-widest mt-1">Locations</p>
               </div>
               <div className="flex-1 md:flex-none text-center p-5 rounded-[24px] bg-white border border-gray-100 shadow-sm shadow-gray-100 min-w-[100px]">
@@ -396,7 +420,7 @@ export default function Profile() {
                         
                         {}
                         <div className="space-y-2">
-                          <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
+                          <label htmlFor="profile-name" className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Nom Complet
                           </label>
                           <div className="relative">
@@ -404,6 +428,7 @@ export default function Profile() {
                               <FaUser className="text-gray-400" size={14} />
                             </div>
                             <input 
+                              id="profile-name"
                               value={editFormData.name} 
                               onChange={e => setEditFormData({...editFormData, name: e.target.value})} 
                               className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-[#C4A47C] focus:ring-4 focus:ring-[#F8F5F0] outline-none transition-all font-bold text-sm text-[#111827]" 
@@ -413,7 +438,7 @@ export default function Profile() {
 
                         {}
                         <div className="space-y-2">
-                          <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
+                          <label htmlFor="profile-email" className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Adresse Email
                           </label>
                           <div className="relative">
@@ -421,6 +446,7 @@ export default function Profile() {
                               <FaEnvelope className="text-gray-400" size={14} />
                             </div>
                             <input 
+                              id="profile-email"
                               type="email"
                               value={editFormData.email} 
                               onChange={e => setEditFormData({...editFormData, email: e.target.value})} 
@@ -431,7 +457,7 @@ export default function Profile() {
 
                         {}
                         <div className="space-y-2">
-                          <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
+                          <label htmlFor="profile-phone" className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Téléphone
                           </label>
                           <div className="relative">
@@ -439,6 +465,7 @@ export default function Profile() {
                               <FaPhone className="text-gray-400" size={14} />
                             </div>
                             <input 
+                              id="profile-phone"
                               type="tel"
                               value={editFormData.phone} 
                               onChange={e => setEditFormData({...editFormData, phone: e.target.value})} 
@@ -449,7 +476,7 @@ export default function Profile() {
 
                         {}
                         <div className="space-y-2">
-                          <label className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
+                          <label htmlFor="profile-password" className="block text-[10px] font-black uppercase tracking-widest text-[#6B7280] ml-1">
                             Nouveau Mot de Passe
                           </label>
                           <div className="relative">
@@ -457,10 +484,11 @@ export default function Profile() {
                               <FaLock className="text-gray-400" size={14} />
                             </div>
                             <input 
+                              id="profile-password"
                               type="password"
                               value={editFormData.password} 
                               onChange={e => setEditFormData({...editFormData, password: e.target.value})} 
-                              placeholder="Laisser vide côté sécurité"
+                              placeholder="Laisser vide pour ne pas changer"
                               className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-[#C4A47C] focus:ring-4 focus:ring-[#F8F5F0] outline-none transition-all font-bold text-sm text-[#111827] placeholder:text-gray-400" 
                             />
                           </div>

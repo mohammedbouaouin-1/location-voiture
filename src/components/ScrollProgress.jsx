@@ -18,6 +18,11 @@ export default function ScrollProgress() {
       <div
         className="h-full bg-gradient-to-r from-[#A68B5B] via-[#C4A47C] to-[#D4B88C] transition-all duration-150 ease-out shadow-[0_0_10px_rgba(196,164,124,0.4)]"
         style={{ width: `${progress}%` }}
+        role="progressbar"
+        aria-valuenow={Math.round(progress)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="Progression de la page"
       />
     </div>
   );

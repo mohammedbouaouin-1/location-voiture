@@ -24,7 +24,7 @@ const protect = async (req, res, next) => {
         return res.json({ message: 'Compte désactivé ou introuvable' });
       }
 
-      next();
+      return next();
     } catch (error) {
       console.error(error);
       res.status(401);
@@ -40,7 +40,7 @@ const protect = async (req, res, next) => {
 
 const admin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
-    next();
+    return next();
   } else {
     res.status(401);
     return res.json({ message: 'Not authorized as an admin' });

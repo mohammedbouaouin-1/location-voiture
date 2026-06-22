@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { getCarById } from "../services/carService";
@@ -11,6 +11,7 @@ import SkeletonCard from "../components/SkeletonCard";
 import { useAuth } from "../contexts/AuthContext";
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { resolveImageUrl } from "../utils/imageUrl";
 
 export default function CarDetails() {
   const { id } = useParams();
@@ -32,7 +33,7 @@ export default function CarDetails() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const fetchCar = async () => {
+  const fetchCar = useCallback(async () => {
     try {
       const data = await getCarById(id);
       setCar(data);
@@ -41,11 +42,11 @@ export default function CarDetails() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     fetchCar();
-  }, [id]);
+  }, [fetchCar]);
 
   const submitReview = async (e) => {
     e.preventDefault();
@@ -85,7 +86,8 @@ export default function CarDetails() {
   const averageRating = car.rating || 5;
 
   
-  const images = [car.image, car.image, car.image];
+  const resolvedImg = resolveImageUrl(car.image);
+  const images = [resolvedImg, resolvedImg, resolvedImg];
 
   
   let totalDays = 0;

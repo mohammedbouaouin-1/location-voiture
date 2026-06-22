@@ -4,16 +4,17 @@ const User = require('../models/User');
   const getUsers = async (req, res) => {
     try {
       const page = Number(req.query.page) || 1;
-      const limit = Number(req.query.limit) || 10;
+      const limit = Math.min(Number(req.query.limit) || 10, 100);
       const skip = (page - 1) * limit;
       const { search } = req.query;
 
       
       const query = { deletedAt: null };
       if (search) {
+        const safeSearch = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         query.$or = [
-          { name: { $regex: search, $options: 'i' } },
-          { email: { $regex: search, $options: 'i' } }
+          { name: { $regex: safeSearch, $options: 'i' } },
+          { email: { $regex: safeSearch, $options: 'i' } }
         ];
       }
 

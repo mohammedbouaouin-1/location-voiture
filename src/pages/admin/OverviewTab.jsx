@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
 import {
   ResponsiveContainer, AreaChart, Area, XAxis, Tooltip,
-  Sparklines, SparklinesCurve, SparklinesSpots,
 } from 'recharts';
 import {
   FaUsers, FaCar, FaCalendarAlt, FaMoneyBillWave,
-  FaChevronRight, FaArrowUp, FaArrowDown, FaCircle,
+  FaChevronRight, FaArrowUp, FaArrowDown,
 } from 'react-icons/fa';
 
 const STATUS_LABELS = {
@@ -44,7 +43,7 @@ export default function OverviewTab({ stats, setActiveTab, fetchStats }) {
 
   useEffect(() => {
     if (fetchStats) fetchStats(period);
-  }, [period]); 
+  }, [period, fetchStats]); 
 
   if (!stats) return null;
 

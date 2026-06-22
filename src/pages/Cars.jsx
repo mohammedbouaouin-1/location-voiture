@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Helmet } from 'react-helmet-async';
@@ -25,7 +25,7 @@ export default function Cars() {
     endDate: null
   });
 
-  const fetchCars = async (start = dateValue.startDate, end = dateValue.endDate) => {
+  const fetchCars = useCallback(async (start, end) => {
     setLoading(true);
     try {
       const params = {};
@@ -41,10 +41,6 @@ export default function Cars() {
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    fetchCars(null, null);
   }, []);
 
   useEffect(() => {
@@ -53,7 +49,7 @@ export default function Cars() {
     if (bothFilled || bothEmpty) {
       fetchCars(dateValue.startDate, dateValue.endDate);
     }
-  }, [dateValue.startDate, dateValue.endDate]);
+  }, [dateValue.startDate, dateValue.endDate, fetchCars]);
 
   const filteredCars = cars
     .filter(car => {

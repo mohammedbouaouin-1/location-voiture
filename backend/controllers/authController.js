@@ -44,13 +44,17 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email }).select('+password');
 
-    if (!user || !(await user.matchPassword(password))) {
+    if (!user) {
       return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
     }
 
-    
+    // Check if account is deactivated BEFORE expensive bcrypt comparison
     if (user.deletedAt) {
       return res.status(403).json({ message: 'Ce compte a été désactivé. Contactez le support.' });
+    }
+
+    if (!(await user.matchPassword(password))) {
+      return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
     }
 
     res.json({

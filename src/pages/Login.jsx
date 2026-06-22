@@ -34,6 +34,11 @@ export default function Login() {
     
     try {
       if (isRegister) {
+        if (formData.password.length < 6) {
+          toast.error('Le mot de passe doit contenir au moins 6 caractères');
+          setLoading(false);
+          return;
+        }
         if (formData.password !== formData.confirmPassword) {
           toast.error("Les mots de passe ne correspondent pas");
           setLoading(false);
@@ -119,7 +124,7 @@ export default function Login() {
           </div>
 
           <div className="text-[10px] font-black uppercase tracking-widest text-gray-500">
-            © 2024 LocaFès. Tous droits réservés.
+            © {new Date().getFullYear()} LocaFès. Tous droits réservés.
           </div>
         </div>
       </div>
@@ -211,7 +216,7 @@ export default function Login() {
               <div className="flex justify-between items-center mb-3 ml-1">
                 <label className="block text-[10px] font-black text-[#6B7280] uppercase tracking-widest">Mot de passe</label>
                 {!isRegister && (
-                  <button type="button" className="text-[10px] font-black text-[#C4A47C] uppercase tracking-widest hover:underline decoration-2 underline-offset-4">Oublié ?</button>
+                  <button type="button" onClick={() => toast('Fonctionnalité bientôt disponible', { icon: '🔧' })} className="text-[10px] font-black text-[#C4A47C] uppercase tracking-widest hover:underline decoration-2 underline-offset-4">Oublié ?</button>
                 )}
               </div>
               <div className="relative group">
@@ -228,11 +233,37 @@ export default function Login() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                   className="absolute right-6 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[#C4A47C]"
                 >
                   {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
                 </button>
               </div>
+              {isRegister && formData.password && (() => {
+                const getPasswordStrength = (password) => {
+                  if (password.length >= 8 && /[A-Z]/.test(password) && /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) {
+                    return { label: 'Fort', color: '#22c55e', width: '100%' };
+                  }
+                  if (password.length >= 6 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+                    return { label: 'Bon', color: '#eab308', width: '66%' };
+                  }
+                  return { label: 'Faible', color: '#ef4444', width: '33%' };
+                };
+                const strength = getPasswordStrength(formData.password);
+                return (
+                  <div className="mt-2">
+                    <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all duration-300"
+                        style={{ width: strength.width, backgroundColor: strength.color }}
+                      />
+                    </div>
+                    <p className="text-[10px] font-bold mt-1" style={{ color: strength.color }}>
+                      {strength.label}
+                    </p>
+                  </div>
+                );
+              })()}
             </div>
 
             {isRegister && (

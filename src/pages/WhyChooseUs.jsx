@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaClock, FaShieldAlt, FaThumbsUp, FaMoneyBillWave, FaHeadset, FaCar, FaStar, FaArrowRight, FaSearch, FaCalendarCheck, FaKey } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
 import { Helmet } from "react-helmet-async";
 
 export default function WhyChooseUs() {
+  const { currentUser } = useAuth();
   const features = [
     { 
       icon: <FaShieldAlt size={32} />, 
@@ -84,6 +86,7 @@ export default function WhyChooseUs() {
           <motion.span 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="inline-block px-5 py-2 bg-[#F8F5F0] text-[#C4A47C] rounded-full font-extrabold text-[10px] uppercase tracking-[0.3em] mb-4 border border-[#E8DDD0] shadow-sm"
           >
             🌟 L'Excellence LocaFès
@@ -91,6 +94,7 @@ export default function WhyChooseUs() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             className="text-4xl md:text-6xl font-black text-[#111827] mb-8 tracking-tight"
           >
             Pourquoi nous <span className="text-[#C4A47C]">faire confiance</span> ?
@@ -98,6 +102,7 @@ export default function WhyChooseUs() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             className="text-xl text-[#6B7280] max-w-3xl mx-auto leading-relaxed font-medium"
           >
@@ -273,13 +278,23 @@ export default function WhyChooseUs() {
                 <FaCar />
                 Voir nos voitures
               </Link>
-              <Link 
-                to="/login" 
-                className="px-10 py-5 bg-white/5 backdrop-blur-md text-white border border-white/10 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#111827] transition-all flex items-center gap-3"
-              >
-                Connexion
-                <FaArrowRight size={14} />
-              </Link>
+              {currentUser ? (
+                <Link 
+                  to="/cars" 
+                  className="px-10 py-5 bg-white/5 backdrop-blur-md text-white border border-white/10 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#111827] transition-all flex items-center gap-3"
+                >
+                  Voir les Voitures
+                  <FaArrowRight size={14} />
+                </Link>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className="px-10 py-5 bg-white/5 backdrop-blur-md text-white border border-white/10 rounded-2xl font-bold text-lg hover:bg-white hover:text-[#111827] transition-all flex items-center gap-3"
+                >
+                  Connexion
+                  <FaArrowRight size={14} />
+                </Link>
+              )}
             </div>
           </div>
         </motion.div>

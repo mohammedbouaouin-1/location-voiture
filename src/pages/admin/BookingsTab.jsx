@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { FaSearch, FaCheck, FaTimes, FaTrash, FaFilePdf, FaDownload } from 'react-icons/fa';
 import { generateInvoicePDF } from '../../utils/generatePDF';
+import { resolveImageUrl } from '../../utils/imageUrl';
 
 const STATUS_LABELS = {
   pending: 'En attente',
@@ -55,10 +57,14 @@ export default function BookingsTab({
     </span>
   );
 
-  const filtered = bookings.filter(b =>
-    b.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    b.car?.name?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const [filterStatus, setFilterStatus] = useState('all');
+
+  const filtered = bookings.filter(b => {
+    const matchesSearch = b.fullName?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      b.car?.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = filterStatus === 'all' || b.status === filterStatus;
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="space-y-12 text-left">
@@ -98,6 +104,29 @@ export default function BookingsTab({
         </div>
       </div>
 
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap items-center gap-2 bg-[#F9FAFB] p-1.5 rounded-2xl border border-gray-100 self-start">
+        {[
+          { key: 'all', label: 'Tous' },
+          { key: 'pending', label: 'En attente' },
+          { key: 'confirmed', label: 'Confirmés' },
+          { key: 'completed', label: 'Terminés' },
+          { key: 'cancelled', label: 'Annulés' },
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setFilterStatus(tab.key)}
+            className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+              filterStatus === tab.key
+                ? 'bg-[#111827] text-white shadow-lg shadow-black/10'
+                : 'text-[#6B7280] hover:text-[#111827]'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
       <div className="bg-white rounded-[48px] overflow-hidden shadow-xl shadow-gray-200/50 border border-white">
         <div className="overflow-x-auto scrollbar-hide">
           <table className="w-full min-w-[1000px]">
@@ -130,7 +159,7 @@ export default function BookingsTab({
                     <td className="px-10 py-8" onClick={() => { setSelectedBooking(booking); setShowDetailModal(true); }}>
                       <div className="flex items-center gap-4">
                         <div className="w-16 h-12 rounded-xl bg-gray-50 overflow-hidden border border-gray-100">
-                          <img src={booking.car?.image} alt="" className="w-full h-full object-cover" />
+                          <img src={resolveImageUrl(booking.car?.image)} alt="" className="w-full h-full object-cover" />
                         </div>
                         <span className="text-sm font-extrabold text-[#111827]">{booking.car?.name}</span>
                       </div>

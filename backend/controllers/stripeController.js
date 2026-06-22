@@ -15,7 +15,7 @@ const createPaymentIntent = async (req, res) => {
 
     const overlapping = await Booking.findOne({
       car: carId,
-      status: { $ne: 'cancelled' },
+      status: { $nin: ['cancelled', 'completed'] },
       $and: [
         { startDate: { $lt: new Date(endDate) } },
         { endDate: { $gt: new Date(startDate) } }
@@ -95,11 +95,27 @@ const handleStripeWebhook = async (req, res) => {
       });
 
       if (!existingBooking) {
-       
+        await Booking.create({
+          user: metadata.userId,
+          car: metadata.carId,
+          fullName: metadata.fullName,
+          phone: metadata.phone,
+          startDate: new Date(metadata.startDate),
+          endDate: new Date(metadata.endDate),
+          totalDays: Number(metadata.totalDays),
+          totalPrice: Number(metadata.totalPrice),
+          paymentMethod: 'card',
+          status: 'confirmed'
+        });
         console.log(` Réservation créée via Webhook pour ${metadata.fullName}`);
-
       } else {
-        console.log(` Réservation déjà existante pour ${metadata.fullName} — webhook ignoré (idempotence)`);
+        if (existingBooking.status !== 'confirmed' && existingBooking.status !== 'completed') {
+          existingBooking.status = 'confirmed';
+          await existingBooking.save();
+          console.log(` Réservation existante mise à jour à 'confirmed' via Webhook pour ${metadata.fullName}`);
+        } else {
+          console.log(` Réservation déjà existante pour ${metadata.fullName} — webhook ignoré (idempotence)`);
+        }
       }
     } catch (error) {
       console.error(`Erreur création réservation via Webhook: ${error.message}`);

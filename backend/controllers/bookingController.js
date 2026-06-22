@@ -8,20 +8,37 @@ const createBooking = async (req, res) => {
     const { car, fullName, phone, startDate, endDate, paymentMethod } = req.body;
 
     
-    const carDetails = await Car.findById(car);
+    const carDetails = await Car.findOne({ _id: car, deletedAt: null });
     if (!carDetails) {
-      return res.status(404).json({ message: 'Véhicule non trouvé' });
+      return res.status(404).json({ message: 'Véhicule non trouvé ou indisponible' });
     }
 
     const sDate = new Date(startDate);
     const eDate = new Date(endDate);
+    
+    if (isNaN(sDate.getTime()) || isNaN(eDate.getTime())) {
+      return res.status(400).json({ message: 'Dates de début ou de fin invalides' });
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const checkStartDate = new Date(sDate);
+    checkStartDate.setHours(0, 0, 0, 0);
+    if (checkStartDate < today) {
+      return res.status(400).json({ message: "La date de début doit être dans le futur ou aujourd'hui" });
+    }
+
+    if (eDate <= sDate) {
+      return res.status(400).json({ message: 'La date de fin doit être strictement après la date de début' });
+    }
+
     const diffTime = Math.abs(eDate - sDate);
     const calculatedTotalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
     const calculatedTotalPrice = calculatedTotalDays * carDetails.price;
 
     const overlapping = await Booking.findOne({
       car,
-      status: { $ne: 'cancelled' },
+      status: { $nin: ['cancelled', 'completed'] },
       $and: [
         { startDate: { $lt: new Date(endDate) } },
         { endDate: { $gt: new Date(startDate) } }
@@ -42,6 +59,7 @@ const createBooking = async (req, res) => {
       totalDays: calculatedTotalDays,
       totalPrice: calculatedTotalPrice,
       paymentMethod,
+      status: paymentMethod === 'card' ? 'confirmed' : 'pending',
     });
 
     const populatedBooking = await Booking.findById(booking._id)
@@ -82,16 +100,17 @@ const getMyBookings = async (req, res) => {
 const getAllBookings = async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 10;
+    const limit = Math.min(Number(req.query.limit) || 10, 100);
     const skip = (page - 1) * limit;
     const { search } = req.query;
 
     
     const query = {};
     if (search) {
+      const safeSearch = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
       query.$or = [
-        { fullName: { $regex: search, $options: 'i' } },
-        { phone: { $regex: search, $options: 'i' } },
+        { fullName: { $regex: safeSearch, $options: 'i' } },
+        { phone: { $regex: safeSearch, $options: 'i' } },
       ];
     }
 
@@ -135,6 +154,13 @@ const updateBookingStatus = async (req, res) => {
 
     if (!isAdmin && !isOwner) {
        return res.status(403).json({ message: 'Non autorisé' });
+    }
+
+    if (req.body.status) {
+      const allowedStatuses = ['pending', 'confirmed', 'completed', 'cancelled'];
+      if (!allowedStatuses.includes(req.body.status)) {
+        return res.status(400).json({ message: 'Statut de réservation invalide' });
+      }
     }
 
     if (!isAdmin) {

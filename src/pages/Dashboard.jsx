@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { getDashboardStats, getUsers, deleteUser, updateUser } from '../services/dashboardService';
 import { getAllBookings, updateBookingStatus, deleteBooking } from '../services/bookingService';
@@ -7,6 +7,7 @@ import { FaCheck, FaTimes, FaExclamationTriangle } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import Sidebar from '../components/Sidebar';
 import Topbar from '../components/Topbar';
+import { resolveImageUrl } from '../utils/imageUrl';
 import OverviewTab from './admin/OverviewTab';
 import UsersTab from './admin/UsersTab';
 import BookingsTab from './admin/BookingsTab';
@@ -169,34 +170,16 @@ export default function Dashboard() {
     ? bookings.filter(b => b.status === 'pending')
     : (stats?.recentBookings?.filter(b => b.status === 'pending') || []);
 
-  useEffect(() => {
-    fetchStats();
-  }, []); 
-
-  useEffect(() => {
-    setPage(1);
-    fetchData(1);
-  }, [activeTab]); 
-
-  useEffect(() => {
-    if (activeTab === 'overview') return;
-    const timer = setTimeout(() => {
-      setPage(1);
-      fetchData(1);
-    }, 400);
-    return () => clearTimeout(timer);
-  }, [searchTerm]); 
-
-  const fetchStats = async (period = '7j') => {
+  const fetchStats = useCallback(async (period = '7j') => {
     try {
       const data = await getDashboardStats(period);
       setStats(data);
     } catch (err) {
       toast.error('Erreur chargement stats');
     }
-  };
+  }, []);
 
-  const fetchData = async (pageNum = page) => {
+  const fetchData = useCallback(async (pageNum = page) => {
     setLoading(true);
     try {
       const params = { page: pageNum, limit, search: searchTerm };
@@ -220,7 +203,25 @@ export default function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [activeTab, searchTerm, fetchStats, page]);
+
+  useEffect(() => {
+    fetchStats();
+  }, [fetchStats]); 
+
+  useEffect(() => {
+    setPage(1);
+    fetchData(1);
+  }, [activeTab, fetchData]); 
+
+  useEffect(() => {
+    if (activeTab === 'overview') return;
+    const timer = setTimeout(() => {
+      setPage(1);
+      fetchData(1);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [searchTerm, activeTab, fetchData]); 
 
   const handlePageChange = (newPage) => {
     if (newPage < 1 || newPage > totalPages) return;
@@ -468,7 +469,7 @@ export default function Dashboard() {
                     handlePageChange={handlePageChange}
                   />
                 )}
-                {activeTab === 'settings' && <SettingsTab />}
+                {activeTab === 'settings' && <SettingsTab bookings={bookings} users={users} cars={cars} />}
               </motion.div>
             )}
           </AnimatePresence>
@@ -576,7 +577,7 @@ export default function Dashboard() {
               <div className="space-y-8">
                 <div className="flex items-center gap-6 p-6 bg-gray-50 rounded-3xl border border-gray-100">
                   <div className="w-24 h-16 rounded-xl overflow-hidden shadow-sm">
-                    <img src={selectedBooking.car?.image ? encodeURI(selectedBooking.car.image) : ''} alt="" className="w-full h-full object-cover" />
+                    <img src={selectedBooking.car?.image ? resolveImageUrl(selectedBooking.car.image) : ''} alt="" className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h4 className="text-xl font-black uppercase tracking-tight">{selectedBooking.car?.name}</h4>

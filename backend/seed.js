@@ -47,11 +47,11 @@ const seedDB = async () => {
       await User.create({
         name: 'Admin LocaFès',
         email: 'admin@locafes.ma',
-        password: 'admin123',
+        password: 'LocaFes_Admin_Secure_2026!',
         role: 'admin',
         phone: '0600000000',
       });
-      console.log(' Admin user created (admin@locafes.ma / admin123)');
+      console.log(' Admin user created (admin@locafes.ma / LocaFes_Admin_Secure_2026!)');
     } else {
       console.log('  Admin user already exists');
     }

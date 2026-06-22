@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FaSearch, FaTrash, FaPlus, FaEdit, FaTable, FaTh, FaDownload, FaGasPump, FaCog, FaCalendarAlt } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
+import { resolveImageUrl } from '../../utils/imageUrl';
 
 function exportCSV(cars) {
   const headers = ['Nom', 'Marque', 'Année', 'Carburant', 'Boîte', 'Prix (DH/J)', 'Disponible'];
@@ -37,11 +38,23 @@ export default function CarsTab({
   handlePageChange
 }) {
   const [viewMode, setViewMode] = useState('table'); 
+  const [filterStatus, setFilterStatus] = useState('all');
 
-  const filtered = cars.filter(c =>
-    c.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    c.brand?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filtered = cars.filter(c => {
+    const matchesSearch = c.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.brand?.toLowerCase().includes(searchTerm.toLowerCase());
+    
+    let matchesStatus = true;
+    if (filterStatus === 'available') {
+      matchesStatus = c.available && c.isAvailableNow;
+    } else if (filterStatus === 'booked') {
+      matchesStatus = c.available && !c.isAvailableNow;
+    } else if (filterStatus === 'offline') {
+      matchesStatus = !c.available;
+    }
+    
+    return matchesSearch && matchesStatus;
+  });
 
   return (
     <div className="space-y-12 text-left">
@@ -106,6 +119,28 @@ export default function CarsTab({
         </div>
       </div>
 
+      {/* Filter Tabs */}
+      <div className="flex flex-wrap items-center gap-2 bg-[#F9FAFB] p-1.5 rounded-2xl border border-gray-100 self-start">
+        {[
+          { key: 'all', label: 'Tous' },
+          { key: 'available', label: 'Disponibles' },
+          { key: 'booked', label: 'Réservés' },
+          { key: 'offline', label: 'Hors Service' },
+        ].map(tab => (
+          <button
+            key={tab.key}
+            onClick={() => setFilterStatus(tab.key)}
+            className={`px-4 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${
+              filterStatus === tab.key
+                ? 'bg-[#111827] text-white shadow-lg shadow-black/10'
+                : 'text-[#6B7280] hover:text-[#111827]'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
       <AnimatePresence mode="wait">
         {}
         {viewMode === 'table' && (
@@ -140,7 +175,7 @@ export default function CarsTab({
                         <td className="px-10 py-8">
                           <div className="flex items-center gap-6">
                             <div className="w-24 h-16 rounded-xl bg-gray-100 overflow-hidden border border-gray-50">
-                              <img src={car.image} alt="" className="w-full h-full object-cover" />
+                              <img src={resolveImageUrl(car.image)} alt="" className="w-full h-full object-cover" />
                             </div>
                             <div>
                               <p className="font-extrabold uppercase tracking-tight text-[#111827]">{car.name}</p>
@@ -240,7 +275,7 @@ export default function CarsTab({
                     {}
                     <div className="relative h-48 overflow-hidden">
                       <img
-                        src={car.image}
+                        src={resolveImageUrl(car.image)}
                         alt={car.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />

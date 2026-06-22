@@ -42,6 +42,7 @@ const carSchema = mongoose.Schema(
     description: {
       type: String,
       default: '',
+      maxlength: [2000, 'La description ne peut pas dépasser 2000 caractères'],
     },
     reviews: [
       {

@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Le nom est requis"],
       trim: true,
+      maxlength: [50, "Le nom ne peut pas dépasser 50 caractères"],
     },
     email: {
       type: String,
@@ -14,7 +15,7 @@ const userSchema = mongoose.Schema(
       unique: true,
       lowercase: true,
       match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         "Veuillez fournir un email valide",
       ],
     },
@@ -27,6 +28,7 @@ const userSchema = mongoose.Schema(
     phone: {
       type: String,
       default: "",
+      maxlength: [20, "Le numéro de téléphone ne peut pas dépasser 20 caractères"],
     },
     role: {
       type: String,

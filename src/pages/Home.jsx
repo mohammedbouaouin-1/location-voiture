@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import CarCard from "../components/CarCard";
 import SkeletonCard from "../components/SkeletonCard";
 import { getCars } from "../services/carService";
-import { FaClock, FaShieldAlt, FaStar, FaUsers, FaCar, FaMoneyBillWave, FaHeadset, FaArrowRight, FaRoute, FaCheckCircle, FaPhoneAlt } from "react-icons/fa";
+import { FaClock, FaShieldAlt, FaStar, FaUsers, FaCar, FaMoneyBillWave, FaHeadset, FaArrowRight, FaCheckCircle, FaPhoneAlt } from "react-icons/fa";
 
 
 const ROTATING_WORDS = [
@@ -98,7 +98,6 @@ function useCountUp(target, duration = 2000, startOnView = true) {
 export default function Home() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -540,12 +539,11 @@ function HeroCarousel() {
     setProgress(0);
   };
 
-  const next = () => {
-    const nextIdx = (current + 1) % HERO_CARS.length;
+  const next = useCallback(() => {
     setDirection(1);
-    setCurrent(nextIdx);
+    setCurrent(current => (current + 1) % HERO_CARS.length);
     setProgress(0);
-  };
+  }, []);
 
   
   useEffect(() => {
@@ -565,7 +563,7 @@ function HeroCarousel() {
       clearInterval(progressRef.current);
     };
     
-  }, [current]);
+  }, [current, next]);
 
   const car = HERO_CARS[current];
 
